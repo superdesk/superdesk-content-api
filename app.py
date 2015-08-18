@@ -23,7 +23,7 @@ import importlib
 import logging
 import os
 
-from publicapi import settings
+import settings
 import superdesk
 from superdesk.celery_app import init_celery
 from superdesk.datalayer import SuperdeskDataLayer

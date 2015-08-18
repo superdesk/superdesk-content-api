@@ -11,5 +11,5 @@
 from .api_publish_service import PublishService  #NOQA
 
 
-def register_plugin(app):
+def init_app(app):
     pass

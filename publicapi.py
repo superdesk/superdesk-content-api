@@ -19,7 +19,7 @@ thus essentially just a normal `Flask <http://flask.pocoo.org/>`_ application.
 """
 
 
-from publicapi import get_app
+from app import get_app
 
 
 if __name__ == '__main__':

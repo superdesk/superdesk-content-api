@@ -60,7 +60,7 @@ class PrepopulateInitAppTestCase(ApiTestCase):
             return init_app
 
     def test_instantiates_prepopulate_resource_with_correct_arguments(self):
-        _fake_app.config = {'SUPERDESK_PUBLICAPI_TESTING': True}
+        _fake_app.config = {'SUPERDESK_CONTENTAPI_TESTING': True}
         fake_prepopulate_service = FakePrepopulateService('prepopulate', _fake_get_backend())
 
         init_app = self._get_target_function()

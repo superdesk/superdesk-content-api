@@ -51,7 +51,7 @@ INSTALLED_APPS = [
 
 DOMAIN = {}
 
-SUPERDESK_PUBLICAPI_TESTING = False
+SUPERDESK_CONTENTAPI_TESTING = True
 
 # NOTE: no trailing slash for the PUBLICAPI_URL setting!
 PUBLICAPI_URL = env('PUBLICAPI_URL', 'http://localhost:5050')

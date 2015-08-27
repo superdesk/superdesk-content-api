@@ -17,7 +17,7 @@ from settings import ELASTICSEARCH_URL
 from eve_elastic import get_es, get_indices
 
 
-TEST_DBNAME = 'sptests'
+TEST_DBNAME = 'content-api-tests'
 
 
 def get_test_settings():
@@ -30,7 +30,7 @@ def get_test_settings():
     test_settings['TESTING'] = True
     test_settings['SUPERDESK_TESTING'] = True
     test_settings['CONTENT_EXPIRY_MINUTES'] = 99
-    test_settings['SUPERDESK_PUBLICAPI_TESTING'] = True
+    test_settings['SUPERDESK_CONTENTAPI_TESTING'] = True
 
     return test_settings
 

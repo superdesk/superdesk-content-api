@@ -1,1 +1,1 @@
-pubapi: gunicorn -c gunicorn_config.py wsgi
+contentapi: gunicorn -c gunicorn_config.py wsgi

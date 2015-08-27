@@ -13,11 +13,10 @@
 from setuptools import setup, find_packages
 from pip.req import parse_requirements
 from pip.download import PipSession
-import os
 
-SOURCE_FOLDER = 'api'
-LONG_DESCRIPTION = open(os.path.join(SOURCE_FOLDER, 'README.md')).read()
-REQUIREMENTS = [str(ir.req) for ir in parse_requirements('api/requirements.txt', session=PipSession())
+
+LONG_DESCRIPTION = open('README.md').read()
+REQUIREMENTS = [str(ir.req) for ir in parse_requirements('requirements.txt', session=PipSession())
                 if not (getattr(ir, 'link', False) or getattr(ir, 'url', False))]
 
 setup(
@@ -27,19 +26,12 @@ setup(
     long_description=LONG_DESCRIPTION,
     author='adrian magdas',
     author_email='adrian.magdas@sourcefabric.org',
-    url='https://github.com/superdesk/superdesk-public-api',
+    url='https://github.com/superdesk/superdesk-public-content_api',
     license='GPLv3',
     platforms=['any'],
-    package_dir={'': SOURCE_FOLDER},
-    packages=find_packages(SOURCE_FOLDER),
+    packages=find_packages(),
     install_requires=REQUIREMENTS,
-    scripts=[
-        os.path.join(SOURCE_FOLDER, 'settings.py'),
-        os.path.join(SOURCE_FOLDER, 'app.py'),
-        os.path.join(SOURCE_FOLDER, 'publicapi.py'),
-        os.path.join(SOURCE_FOLDER, 'wsgi.py'),
-        os.path.join(SOURCE_FOLDER, 'manage.py')
-    ],
+    scripts=[ 'app.py', 'manage.py', 'settings.py', 'wsgi.py' ],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',

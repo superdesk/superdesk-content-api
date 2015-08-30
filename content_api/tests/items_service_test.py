@@ -9,14 +9,14 @@
 # at https://www.sourcefabric.org/superdesk/license
 
 import json
-
 from datetime import date
 from eve.utils import ParsedRequest
 from flask import Flask
-from tests import ApiTestCase
 from unittest import mock
 from unittest.mock import MagicMock
 from werkzeug.datastructures import MultiDict
+
+from content_api.tests import ApiTestCase
 
 
 class ItemsServiceTestCase(ApiTestCase):
@@ -28,7 +28,7 @@ class ItemsServiceTestCase(ApiTestCase):
         Make the test fail immediately if the class cannot be imported.
         """
         try:
-            from items import ItemsService
+            from content_api.items import ItemsService
         except ImportError:
             self.fail("Could not import class under test (ItemsService).")
         else:
@@ -56,7 +56,7 @@ class CheckForUnknownParamsMethodTestCase(ItemsServiceTestCase):
         request = MagicMock()
         request.args = MultiDict([('param_x', 'something')])
 
-        from errors import UnexpectedParameterError
+        from content_api.errors import UnexpectedParameterError
         instance = self._make_one()
 
         with self.assertRaises(UnexpectedParameterError) as context:
@@ -69,7 +69,7 @@ class CheckForUnknownParamsMethodTestCase(ItemsServiceTestCase):
         request = MagicMock()
         request.args = MultiDict([('q', '{"language": "en"}')])
 
-        from errors import UnexpectedParameterError
+        from content_api.errors import UnexpectedParameterError
         instance = self._make_one()
 
         with self.assertRaises(UnexpectedParameterError) as context:
@@ -87,7 +87,7 @@ class CheckForUnknownParamsMethodTestCase(ItemsServiceTestCase):
         request = MagicMock()
         request.args = MultiDict([('start_date', '2015-01-01')])
 
-        from errors import UnexpectedParameterError
+        from content_api.errors import UnexpectedParameterError
         instance = self._make_one()
 
         with self.assertRaises(UnexpectedParameterError) as context:
@@ -105,7 +105,7 @@ class CheckForUnknownParamsMethodTestCase(ItemsServiceTestCase):
         request = MagicMock()
         request.args = MultiDict([('end_date', '2015-01-01')])
 
-        from errors import UnexpectedParameterError
+        from content_api.errors import UnexpectedParameterError
         instance = self._make_one()
 
         with self.assertRaises(UnexpectedParameterError) as context:
@@ -123,7 +123,7 @@ class CheckForUnknownParamsMethodTestCase(ItemsServiceTestCase):
         request = MagicMock()
         request.args = MultiDict([('foo', 'value 1'), ('foo', 'value 2')])
 
-        from errors import UnexpectedParameterError
+        from content_api.errors import UnexpectedParameterError
         instance = self._make_one()
 
         with self.assertRaises(UnexpectedParameterError) as context:
@@ -137,7 +137,7 @@ class CheckForUnknownParamsMethodTestCase(ItemsServiceTestCase):
 fake_super_get = MagicMock(name='fake super().get')
 
 
-@mock.patch('publicapi.items.service.BaseService.get', fake_super_get)
+@mock.patch('content_api.items.service.BaseService.get', fake_super_get)
 class GetMethodTestCase(ItemsServiceTestCase):
     """Tests for the get() method."""
 
@@ -145,7 +145,7 @@ class GetMethodTestCase(ItemsServiceTestCase):
         super().setUp()
         fake_super_get.reset_mock()
 
-    @mock.patch('publicapi.items.service.ItemsService._check_for_unknown_params')
+    @mock.patch('content_api.items.service.ItemsService._check_for_unknown_params')
     def test_correctly_invokes_parameter_validation(self, fake_check_unknown):
         fake_request = MagicMock()
         fake_request.args = MultiDict()
@@ -175,7 +175,7 @@ class GetMethodTestCase(ItemsServiceTestCase):
             self.assertGreater(len(args), 1)
             self.assertEqual(sorted(list(args[1])), expected_whitelist)
 
-    @mock.patch('publicapi.items.service.ItemsService._set_fields_filter')
+    @mock.patch('content_api.items.service.ItemsService._set_fields_filter')
     def test_sets_fields_filter_on_request_object(self, fake_set_fields_filter):
         fake_request = MagicMock()
         fake_request.args = MultiDict()
@@ -221,7 +221,7 @@ class GetMethodTestCase(ItemsServiceTestCase):
         request.args = MultiDict([('start_date', '2015-13-35')])
         lookup = {}
 
-        from errors import BadParameterValueError
+        from content_api.errors import BadParameterValueError
         instance = self._make_one()
 
         with self.assertRaises(BadParameterValueError) as context:
@@ -238,7 +238,7 @@ class GetMethodTestCase(ItemsServiceTestCase):
         request.args = MultiDict([('end_date', '2015-13-35')])
         lookup = {}
 
-        from errors import BadParameterValueError
+        from content_api.errors import BadParameterValueError
         instance = self._make_one()
 
         with self.assertRaises(BadParameterValueError) as context:
@@ -258,7 +258,7 @@ class GetMethodTestCase(ItemsServiceTestCase):
         ])
         lookup = {}
 
-        from errors import BadParameterValueError
+        from content_api.errors import BadParameterValueError
         instance = self._make_one()
 
         with self.assertRaises(BadParameterValueError) as context:
@@ -323,7 +323,7 @@ class GetMethodTestCase(ItemsServiceTestCase):
         default_operator = args[0].args['default_operator']
         self.assertEqual(default_operator, 'OR')
 
-    @mock.patch('publicapi.items.service.utcnow')
+    @mock.patch('content_api.items.service.utcnow')
     def test_sets_end_date_to_today_if_not_given(self, fake_utcnow):
         request = MagicMock()
         request.args = MultiDict([('start_date', '2012-08-21')])
@@ -364,7 +364,7 @@ class GetMethodTestCase(ItemsServiceTestCase):
         }
         self.assertEqual(date_filter, expected_filter)
 
-    @mock.patch('publicapi.items.service.utcnow')
+    @mock.patch('content_api.items.service.utcnow')
     def test_sets_end_date_and_start_date_to_today_if_both_not_given(
         self, fake_utcnow
     ):
@@ -410,7 +410,7 @@ class GetMethodTestCase(ItemsServiceTestCase):
         }
         self.assertEqual(date_filter, expected_filter)
 
-    @mock.patch('publicapi.items.service.utcnow')
+    @mock.patch('content_api.items.service.utcnow')
     def test_raises_correct_error_for_start_date_in_future(self, fake_utcnow):
         request = MagicMock()
         request.args = MultiDict([('start_date', '2007-10-31')])
@@ -418,7 +418,7 @@ class GetMethodTestCase(ItemsServiceTestCase):
 
         fake_utcnow.return_value.date.return_value = date(2007, 10, 30)
 
-        from errors import BadParameterValueError
+        from content_api.errors import BadParameterValueError
         instance = self._make_one()
 
         with self.assertRaises(BadParameterValueError) as context:
@@ -431,7 +431,7 @@ class GetMethodTestCase(ItemsServiceTestCase):
             "(current server date (UTC): 2007-10-30)"
         )
 
-    @mock.patch('publicapi.items.service.utcnow')
+    @mock.patch('content_api.items.service.utcnow')
     def test_raises_correct_error_for_end_date_in_future(self, fake_utcnow):
         request = MagicMock()
         request.args = MultiDict([('end_date', '2007-10-31')])
@@ -439,7 +439,7 @@ class GetMethodTestCase(ItemsServiceTestCase):
 
         fake_utcnow.return_value.date.return_value = date(2007, 10, 30)
 
-        from errors import BadParameterValueError
+        from content_api.errors import BadParameterValueError
         instance = self._make_one()
 
         with self.assertRaises(BadParameterValueError) as context:
@@ -480,7 +480,7 @@ class SetFieldsFilterMethodTestCase(ItemsServiceTestCase):
         request.args = MultiDict([('exclude_fields', 'uri')])
         request.projection = None
 
-        from errors import BadParameterValueError
+        from content_api.errors import BadParameterValueError
         instance = self._make_one()
 
         with self.assertRaises(BadParameterValueError) as context:
@@ -501,7 +501,7 @@ class SetFieldsFilterMethodTestCase(ItemsServiceTestCase):
         ])
         request.projection = None
 
-        from errors import UnexpectedParameterError
+        from content_api.errors import UnexpectedParameterError
         instance = self._make_one()
 
         with self.assertRaises(UnexpectedParameterError) as context:
@@ -518,8 +518,8 @@ class SetFieldsFilterMethodTestCase(ItemsServiceTestCase):
         request.args = MultiDict([('include_fields', 'field_x')])
         request.projection = None
 
-        from errors import BadParameterValueError
-        from items import ItemsResource
+        from content_api.errors import BadParameterValueError
+        from content_api.items import ItemsResource
 
         instance = self._make_one()
 
@@ -537,8 +537,8 @@ class SetFieldsFilterMethodTestCase(ItemsServiceTestCase):
         request.args = MultiDict([('exclude_fields', 'field_x')])
         request.projection = None
 
-        from errors import BadParameterValueError
-        from items import ItemsResource
+        from content_api.errors import BadParameterValueError
+        from content_api.items import ItemsResource
 
         instance = self._make_one()
 
@@ -585,7 +585,7 @@ class SetFieldsFilterMethodTestCase(ItemsServiceTestCase):
 fake_super_find_one = MagicMock(name='fake super().find_one')
 
 
-@mock.patch('publicapi.items.service.BaseService.find_one', fake_super_find_one)
+@mock.patch('content_api.items.service.BaseService.find_one', fake_super_find_one)
 class FindOneMethodTestCase(ItemsServiceTestCase):
     """Tests for the find_one() method."""
 
@@ -593,7 +593,7 @@ class FindOneMethodTestCase(ItemsServiceTestCase):
         super().setUp()
         fake_super_find_one.reset_mock()
 
-    @mock.patch('publicapi.items.service.ItemsService._check_for_unknown_params')
+    @mock.patch('content_api.items.service.ItemsService._check_for_unknown_params')
     def test_correctly_invokes_parameter_validation(self, fake_check_unknown):
         fake_request = MagicMock()
         fake_request.args = MultiDict()
@@ -621,7 +621,7 @@ class FindOneMethodTestCase(ItemsServiceTestCase):
             self.assertGreater(len(args), 1)
             self.assertEqual(sorted(list(args[1])), expected_whitelist)
 
-    @mock.patch('publicapi.items.service.ItemsService._set_fields_filter')
+    @mock.patch('content_api.items.service.ItemsService._set_fields_filter')
     def test_sets_fields_filter_on_request_object(self, fake_set_fields_filter):
         fake_request = MagicMock()
         fake_request.args = MultiDict()

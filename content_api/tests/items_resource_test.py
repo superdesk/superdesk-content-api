@@ -8,7 +8,7 @@
 # AUTHORS and LICENSE files distributed with this source code, or
 # at https://www.sourcefabric.org/superdesk/license
 
-from tests import ApiTestCase
+from content_api.tests import ApiTestCase
 
 
 class ItemsResourceTestCase(ApiTestCase):
@@ -20,7 +20,7 @@ class ItemsResourceTestCase(ApiTestCase):
         Make the test fail immediately if the class cannot be imported.
         """
         try:
-            from items import ItemsResource
+            from content_api.items import ItemsResource
         except ImportError:
             self.fail("Could not import class under test (ItemsResource).")
         else:

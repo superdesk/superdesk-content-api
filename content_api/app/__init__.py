@@ -27,7 +27,7 @@ import importlib
 import logging
 import os
 
-import settings
+from content_api.app import settings
 import superdesk
 from superdesk.datalayer import SuperdeskDataLayer
 from superdesk.storage.desk_media_storage import SuperdeskGridFSMediaStorage
@@ -74,16 +74,17 @@ def get_app(config=None):
     if config is None:
         config = {}
 
-    config['APP_ABSPATH'] = os.path.abspath(os.path.dirname(__file__))
+    config['APP_ABSPATH'] = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
+
     for key in dir(settings):
         if key.isupper():
             config.setdefault(key, getattr(settings, key))
 
     media_storage = SuperdeskGridFSMediaStorage
 
-    if config.get('AMAZON_CONTAINER_NAME', None):
-        from superdesk.storage.amazon.amazon_media_storage import AmazonMediaStorage  # @UnresolvedImport
-        media_storage = AmazonMediaStorage
+#     if config.get('AMAZON_CONTAINER_NAME', None):
+#         from superdesk.storage.amazon.amazon_media_storage import AmazonMediaStorage  # @UnresolvedImport
+#         media_storage = AmazonMediaStorage
 
     app = Eve(
         settings=config,
@@ -111,13 +112,3 @@ def get_app(config=None):
         app.register_blueprint(blueprint, url_prefix=prefix)
 
     return app
-
-
-if __name__ == '__main__':
-    app = get_app()
-    app.run(
-        host='0.0.0.0',
-        port=5050,   # XXX: have PUBAPI_PORT in config... and other things
-        debug=False,  # TODO: remove before pushing to production (+ have in cfg)
-        use_reloader=False
-    )

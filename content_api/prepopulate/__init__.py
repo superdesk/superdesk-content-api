@@ -9,9 +9,9 @@
 # at https://www.sourcefabric.org/superdesk/license
 
 import superdesk
-from prepopulate.service import PrepopulateService
-from prepopulate.resource import PrepopulateResource
-import prepopulate.command
+from .service import PrepopulateService
+from .resource import PrepopulateResource
+import content_api.prepopulate.command
 
 
 def init_app(app):

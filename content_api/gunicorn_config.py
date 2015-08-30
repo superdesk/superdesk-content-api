@@ -12,6 +12,7 @@ import os
 import multiprocessing
 
 bind = '0.0.0.0:%s' % os.environ.get('PORT', '5050')
+bind = '0.0.0.0:5050'
 workers = multiprocessing.cpu_count()
 
 accesslog = '-'

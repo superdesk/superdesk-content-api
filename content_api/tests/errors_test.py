@@ -8,7 +8,7 @@
 # AUTHORS and LICENSE files distributed with this source code, or
 # at https://www.sourcefabric.org/superdesk/license
 
-from tests import ApiTestCase
+from content_api.tests import ApiTestCase
 
 
 class PublicApiErrorTestCase(ApiTestCase):
@@ -19,7 +19,7 @@ class PublicApiErrorTestCase(ApiTestCase):
         Make the test fail immediately if the class cannot be imported.
         """
         try:
-            from errors import PublicApiError
+            from content_api.errors import PublicApiError
         except ImportError:
             self.fail("Could not import class under test")
         else:
@@ -55,14 +55,14 @@ class UnknownParameterErrorTestCase(ApiTestCase):
         Make the test fail immediately if the class cannot be imported.
         """
         try:
-            from errors import UnexpectedParameterError
+            from content_api.errors import UnexpectedParameterError
         except ImportError:
             self.fail("Could not import class under test")
         else:
             return UnexpectedParameterError(*args, **kwargs)
 
     def test_inherits_from_base_publicapi_error(self):
-        from errors import PublicApiError
+        from content_api.errors import PublicApiError
         error = self._make_one()
         self.assertIsInstance(error, PublicApiError)
 
@@ -87,14 +87,14 @@ class BadParameterValueTestCase(ApiTestCase):
         Make the test fail immediately if the class cannot be imported.
         """
         try:
-            from errors import BadParameterValueError
+            from content_api.errors import BadParameterValueError
         except ImportError:
             self.fail("Could not import class under test")
         else:
             return BadParameterValueError(*args, **kwargs)
 
     def test_inherits_from_base_publicapi_error(self):
-        from errors import PublicApiError
+        from content_api.errors import PublicApiError
         error = self._make_one()
         self.assertIsInstance(error, PublicApiError)
 

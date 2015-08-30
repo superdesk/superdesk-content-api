@@ -9,6 +9,6 @@
 # at https://www.sourcefabric.org/superdesk/license
 
 
-from app import get_app
+from content_api.app import get_app
 
 application = get_app()

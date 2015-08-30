@@ -9,7 +9,7 @@
 # at https://www.sourcefabric.org/superdesk/license
 
 import os
-from behave_setup import setup
+from content_api.behave_setup import setup
 
 
 def before_all(context):

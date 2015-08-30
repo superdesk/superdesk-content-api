@@ -13,7 +13,7 @@ from flask import current_app as app
 import json
 import os
 
-from behave_setup import drop_elastic, drop_mongo
+from content_api.behave_setup import drop_elastic, drop_mongo
 from superdesk import get_resource_service
 import superdesk
 from superdesk.services import BaseService

@@ -8,14 +8,13 @@
 # AUTHORS and LICENSE files distributed with this source code, or
 # at https://www.sourcefabric.org/superdesk/license
 
-from tests import ApiTestCase
-
 from unittest import mock
 from unittest.mock import MagicMock
 
+from content_api.tests import ApiTestCase
+
 
 _fake_prepopulate_resource = MagicMock()
-_fake_prepopulate_service = MagicMock()
 _fake_backend = MagicMock(name='superdesk backend')
 _fake_app = MagicMock(name='app')
 
@@ -40,8 +39,8 @@ class FakePrepopulateService():
         return not self.__eq__(other)
 
 
-@mock.patch('publicapi.prepopulate.PrepopulateResource', _fake_prepopulate_resource)
-@mock.patch('publicapi.prepopulate.PrepopulateService', FakePrepopulateService)
+@mock.patch('content_api.prepopulate.PrepopulateResource', _fake_prepopulate_resource)
+@mock.patch('content_api.prepopulate.PrepopulateService', FakePrepopulateService)
 @mock.patch('superdesk.get_backend', _fake_get_backend)
 @mock.patch('superdesk.app', _fake_app)
 class PrepopulateInitAppTestCase(ApiTestCase):
@@ -53,7 +52,7 @@ class PrepopulateInitAppTestCase(ApiTestCase):
         Make the test fail immediately if the function cannot be imported.
         """
         try:
-            from prepopulate import init_app
+            from content_api.prepopulate import init_app
         except ImportError:
             self.fail("Could not import function under test (init_app).")
         else:

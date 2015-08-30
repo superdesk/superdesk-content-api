@@ -9,7 +9,7 @@
 # at https://www.sourcefabric.org/superdesk/license
 
 import logging
-from items.service import ItemsService
+from content_api.items.service import ItemsService
 
 
 logger = logging.getLogger(__name__)

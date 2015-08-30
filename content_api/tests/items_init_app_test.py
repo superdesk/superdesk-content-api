@@ -8,10 +8,10 @@
 # AUTHORS and LICENSE files distributed with this source code, or
 # at https://www.sourcefabric.org/superdesk/license
 
-from tests import ApiTestCase
-
 from unittest import mock
 from unittest.mock import MagicMock
+
+from content_api.tests import ApiTestCase
 
 
 _fake_items_resource = MagicMock()
@@ -39,8 +39,8 @@ class FakeItemsService():
         return not self.__eq__(other)
 
 
-@mock.patch('publicapi.items.ItemsResource', _fake_items_resource)
-@mock.patch('publicapi.items.ItemsService', FakeItemsService)
+@mock.patch('content_api.items.ItemsResource', _fake_items_resource)
+@mock.patch('content_api.items.ItemsService', FakeItemsService)
 @mock.patch('superdesk.get_backend', _fake_get_backend)
 class ItemsInitAppTestCase(ApiTestCase):
     """Base class for the `items.init_app` function tests."""
@@ -51,7 +51,7 @@ class ItemsInitAppTestCase(ApiTestCase):
         Make the test fail immediately if the function cannot be imported.
         """
         try:
-            from items import init_app
+            from content_api.items import init_app
         except ImportError:
             self.fail("Could not import function under test (init_app).")
         else:

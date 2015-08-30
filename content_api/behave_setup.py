@@ -12,8 +12,8 @@
 import os
 import unittest
 import elasticsearch
-from app import get_app
-from settings import ELASTICSEARCH_URL
+from content_api.app import get_app
+from content_api.app.settings import ELASTICSEARCH_URL
 from eve_elastic import get_es, get_indices
 
 

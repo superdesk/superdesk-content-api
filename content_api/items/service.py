@@ -16,14 +16,14 @@ from datetime import datetime
 from eve.utils import ParsedRequest
 from flask import current_app as app
 from flask import request
-from errors import BadParameterValueError, UnexpectedParameterError
-from items.resource import ItemsResource
+from content_api.errors import BadParameterValueError, UnexpectedParameterError
+from content_api.items.resource import ItemsResource
 from superdesk.services import BaseService
 from superdesk.utc import utcnow
 from urllib.parse import urljoin, urlparse, quote
 from werkzeug.datastructures import MultiDict
-from assets.util import url_for_media
-from settings import ELASTIC_DATE_FORMAT
+from content_api.assets.util import url_for_media
+from content_api.app.settings import ELASTIC_DATE_FORMAT
 from superdesk.datalayer import InvalidSearchString
 
 

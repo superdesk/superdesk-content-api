@@ -8,7 +8,7 @@
 # AUTHORS and LICENSE files distributed with this source code, or
 # at https://www.sourcefabric.org/superdesk/license
 
-from tests import ApiTestCase
+from content_api.tests import ApiTestCase
 
 
 class PrepopulateCommandTestCase(ApiTestCase):
@@ -20,7 +20,7 @@ class PrepopulateCommandTestCase(ApiTestCase):
         Make the test fail immediately if the class cannot be imported.
         """
         try:
-            from prepopulate.command import AppPrepopulateCommand
+            from content_api.prepopulate.command import AppPrepopulateCommand
         except ImportError:
             self.fail("Could not import class under test (AppPrepopulateCommand).")
         else:

@@ -43,10 +43,10 @@ if env('REDIS_PORT'):
     REDIS_URL = env('REDIS_PORT').replace('tcp:', 'redis:')
 
 INSTALLED_APPS = [
-    'items',
-    'packages',
-    'prepopulate',
-    'assets'
+    'content_api.items',
+    'content_api.packages',
+    'content_api.prepopulate',
+    'content_api.assets'
 ]
 
 DOMAIN = {}

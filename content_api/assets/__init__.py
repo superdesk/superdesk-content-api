@@ -11,7 +11,7 @@
 """Assets module"""
 import logging
 import superdesk
-from errors import FileNotFoundError
+from content_api.errors import FileNotFoundError
 from werkzeug.wsgi import wrap_file
 from flask import request, current_app as app
 

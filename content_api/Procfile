@@ -1,1 +1,1 @@
-contentapi: gunicorn -c gunicorn_config.py wsgi
+contentapi: gunicorn -c content_api/gunicorn_config.py content_api.wsgi

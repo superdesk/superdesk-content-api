@@ -8,7 +8,7 @@
 # AUTHORS and LICENSE files distributed with this source code, or
 # at https://www.sourcefabric.org/superdesk/license
 
-from prepopulate.service import prepopulate_data
+from content_api.prepopulate.service import prepopulate_data
 import superdesk
 
 

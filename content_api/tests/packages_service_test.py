@@ -9,8 +9,9 @@
 # at https://www.sourcefabric.org/superdesk/license
 
 from flask import Flask
-from tests import ApiTestCase
 from unittest import mock
+
+from content_api.tests import ApiTestCase
 
 
 class PackagesServiceTestCase(ApiTestCase):
@@ -22,7 +23,7 @@ class PackagesServiceTestCase(ApiTestCase):
         Make the test fail immediately if the class cannot be imported.
         """
         try:
-            from packages import PackagesService
+            from content_api.packages import PackagesService
         except ImportError:
             self.fail("Could not import class under test (PackagesService).")
         else:
@@ -33,7 +34,7 @@ class PackagesServiceTestCase(ApiTestCase):
         return self._get_target_class()(*args, **kwargs)
 
 
-@mock.patch("publicapi.packages.service.ItemsService.on_fetched_item")
+@mock.patch("content_api.packages.service.ItemsService.on_fetched_item")
 class OnFetchedItemMethodTestCase(PackagesServiceTestCase):
     """Tests for the on_fetched_item() method."""
 
@@ -99,7 +100,7 @@ class OnFetchedItemMethodTestCase(PackagesServiceTestCase):
         self.assertEqual(document.get('associations'), expected_assoc)
 
 
-@mock.patch("publicapi.packages.service.ItemsService.on_fetched")
+@mock.patch("content_api.packages.service.ItemsService.on_fetched")
 class OnFetchedMethodTestCase(PackagesServiceTestCase):
     """Tests for the on_fetched() method."""
 

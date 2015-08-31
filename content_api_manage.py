@@ -11,8 +11,8 @@
 
 """Superdesk API Manager"""
 
-from flask.ext.script import Manager
-from app import get_app
+from flask.ext.script import Manager  # @UnresolvedImport
+from content_api.app import get_app
 import superdesk
 
 

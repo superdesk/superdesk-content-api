@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'content_api.items',
     'content_api.packages',
     'content_api.prepopulate',
+    'content_api.publish',
     'content_api.assets'
 ]
 

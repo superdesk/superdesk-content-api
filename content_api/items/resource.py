@@ -11,6 +11,34 @@
 from superdesk.resource import Resource
 
 
+schema = {
+    'associations': {'type': 'dict'},
+    'body_html': {'type': 'string'},
+    'body_text': {'type': 'string'},
+    'byline': {'type': 'string'},
+    'copyrightnotice': {'type': 'string'},
+    'description_html': {'type': 'string'},
+    'description_text': {'type': 'string'},
+    'headline': {'type': 'string'},
+    'language': {'type': 'string'},
+    'located': {'type': 'string'},
+    'mimetype': {'type': 'string'},
+    'organization': {'type': 'list'},
+    'person': {'type': 'list'},
+    'place': {'type': 'list'},
+    'profile': {'type': 'string'},
+    'pubstatus': {'type': 'string'},
+    'renditions': {'type': 'dict'},
+    'subject': {'type': 'list'},
+    'type': {'type': 'string'},
+    'urgency': {'type': 'integer'},
+    'uri': {'type': 'string'},
+    'usageterms': {'type': 'string'},
+    'version': {'type': 'string'},
+    'versioncreated': {'type': 'datetime'},
+}
+
+
 class ItemsResource(Resource):
     """A class defining and configuring the /items API endpoint."""
 
@@ -20,33 +48,7 @@ class ItemsResource(Resource):
     #     "tag:localhost:2015:f4b35e12-559b-4a2b-b1f2-d5e64048bde8"
     #
     item_url = 'regex("[\w,.:-]+")'
-
-    schema = {
-        'associations': {'type': 'dict'},
-        'body_html': {'type': 'string'},
-        'body_text': {'type': 'string'},
-        'byline': {'type': 'string'},
-        'copyrightnotice': {'type': 'string'},
-        'description_html': {'type': 'string'},
-        'description_text': {'type': 'string'},
-        'headline': {'type': 'string'},
-        'language': {'type': 'string'},
-        'located': {'type': 'string'},
-        'mimetype': {'type': 'string'},
-        'organization': {'type': 'list'},
-        'person': {'type': 'list'},
-        'place': {'type': 'list'},
-        'profile': {'type': 'string'},
-        'pubstatus': {'type': 'string'},
-        'renditions': {'type': 'dict'},
-        'subject': {'type': 'list'},
-        'type': {'type': 'string'},
-        'urgency': {'type': 'integer'},
-        'uri': {'type': 'string'},
-        'usageterms': {'type': 'string'},
-        'version': {'type': 'string'},
-        'versioncreated': {'type': 'datetime'},
-    }
+    schema = schema
 
     datasource = {
         'search_backend': 'elastic',

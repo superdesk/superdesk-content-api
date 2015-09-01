@@ -14,8 +14,8 @@ from unittest.mock import MagicMock
 from content_api.tests import ApiTestCase
 
 
-_fake_items_resource = MagicMock()
-_fake_items_service = MagicMock()
+_fake_publish_resource = MagicMock()
+_fake_publish_service = MagicMock()
 _fake_backend = MagicMock(name='superdesk backend')
 
 
@@ -24,7 +24,7 @@ def _fake_get_backend():
     return _fake_backend
 
 
-class FakeItemsService():
+class FakePublishService():
     def __init__(self, datasource, backend=None):
         self.datasource = datasource
         self.backend = backend
@@ -39,11 +39,11 @@ class FakeItemsService():
         return not self.__eq__(other)
 
 
-@mock.patch('content_api.items.ItemsResource', _fake_items_resource)
-@mock.patch('content_api.items.ItemsService', FakeItemsService)
+@mock.patch('content_api.publish.PublishResource', _fake_publish_resource)
+@mock.patch('superdesk.services.BaseService', FakePublishService)
 @mock.patch('superdesk.get_backend', _fake_get_backend)
-class ItemsInitAppTestCase(ApiTestCase):
-    """Base class for the `items.init_app` function tests."""
+class PublishInitAppTestCase(ApiTestCase):
+    """Base class for the `publish.init_app` function tests."""
 
     def _get_target_function(self):
         """Return the function under test.
@@ -51,22 +51,22 @@ class ItemsInitAppTestCase(ApiTestCase):
         Make the test fail immediately if the function cannot be imported.
         """
         try:
-            from content_api.items import init_app
+            from content_api.publish import init_app
         except ImportError:
             self.fail("Could not import function under test (init_app).")
         else:
             return init_app
 
-    def test_instantiates_items_resource_with_correct_arguments(self):
+    def test_instantiates_publish_resource_with_correct_arguments(self):
         fake_app = MagicMock(name='app')
-        fake_items_service = FakeItemsService('items', _fake_get_backend())
+        fake_publish_service = FakePublishService('publish', _fake_get_backend())
 
         init_app = self._get_target_function()
         init_app(fake_app)
 
-        self.assertTrue(_fake_items_resource.called)
-        args, kwargs = _fake_items_resource.call_args
+        self.assertTrue(_fake_publish_resource.called)
+        args, kwargs = _fake_publish_resource.call_args
 
-        self.assertTrue(len(args) > 0 and args[0] == 'items')
+        self.assertTrue(len(args) > 0 and args[0] == 'publish')
         self.assertIs(kwargs.get('app'), fake_app)
-        self.assertEqual(kwargs.get('service'), fake_items_service)
+        self.assertEqual(kwargs.get('service'), fake_publish_service)

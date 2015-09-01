@@ -11,7 +11,7 @@
 import superdesk
 from .service import PrepopulateService
 from .resource import PrepopulateResource
-import content_api.prepopulate.command
+import content_api.prepopulate.command  # NOQA
 
 
 def init_app(app):

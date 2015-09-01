@@ -25,13 +25,13 @@ def _fake_get_backend():
 
 
 class FakePackagesService():
-    def __init__(self, endpoint_name, backend=None):
-        self.endpoint_name = endpoint_name
+    def __init__(self, datasource, backend=None):
+        self.datasource = datasource
         self.backend = backend
 
     def __eq__(self, other):
         return (
-            self.endpoint_name == other.endpoint_name and
+            self.datasource == other.datasource and
             self.backend is other.backend
         )
 

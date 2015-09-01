@@ -31,7 +31,7 @@ setup(
     platforms=['any'],
     packages=find_packages(),
     install_requires=REQUIREMENTS,
-    scripts=[ 'content_api_manage.py' ],
+    scripts=['content_api_manage.py'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',

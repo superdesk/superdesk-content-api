@@ -13,8 +13,7 @@ install: "pip install -r requirements.txt --use-mirrors"
 
 script:
     - nosetests
-    - behave --format progress2 --logging-level ERROR
-    - LDAP_SERVER="ldap://sourcefabric.org" LDAP_BASE_FILTER="OU=Superdesk Users,dc=sourcefabric,dc=org" behave --format progress2 --logging-level ERROR
+    - behave --format progress2 --logging-level ERROR content_api/features
     - flake8
 
 sudo: false

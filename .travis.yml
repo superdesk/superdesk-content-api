@@ -1,7 +1,8 @@
 language: python
 
+sudo: false
+
 python:
-    - "3.3"
     - "3.4"
 
 services:
@@ -9,11 +10,17 @@ services:
     - elasticsearch
     - redis-server
 
-install: "pip install -r requirements.txt --use-mirrors"
+cache:
+  directories:
+    - $HOME/.cache/pip
+
+install:
+    - pip install -r requirements.txt --use-mirrors && pip install coveralls==1.0a2
 
 script:
-    - nosetests
+    - nosetests --with-coverage --cover-package=content_api
     - behave --format progress2 --logging-level ERROR content_api/features
     - flake8
 
-sudo: false
+after_script:
+    - killall -9 python

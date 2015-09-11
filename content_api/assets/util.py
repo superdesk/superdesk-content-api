@@ -14,7 +14,8 @@ from flask import url_for, current_app as app
 def url_for_media(media_id):
     try:
         url = app.media.url_for_media(media_id)
-        if url is None:
-            return url_for('assets.get_media_streamed', media_id=media_id, _external=True)
+        if url:
+            return url
+        return url_for('assets_raw.get_media_streamed', media_id=media_id, _external=True)
     except AttributeError:
-        return url_for('assets.get_media_streamed', media_id=media_id, _external=True)
+        return url_for('assets_raw.get_media_streamed', media_id=media_id, _external=True)

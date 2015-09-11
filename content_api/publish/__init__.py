@@ -9,9 +9,9 @@
 # at https://www.sourcefabric.org/superdesk/license
 
 import superdesk
-from superdesk.services import BaseService
 
 from .resource import PublishResource
+from .service import PublishService
 
 
 def init_app(app):
@@ -21,5 +21,5 @@ def init_app(app):
     :type app: `Eve`
     """
     endpoint_name = 'publish'
-    service = BaseService(endpoint_name, backend=superdesk.get_backend())
+    service = PublishService(endpoint_name, backend=superdesk.get_backend())
     PublishResource(endpoint_name, app=app, service=service)

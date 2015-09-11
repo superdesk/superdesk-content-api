@@ -4,14 +4,14 @@ Feature: Publish service
     	When we post to "/publish"
     	"""
     	[{
-            "_id": "tag:example.com,0000:newsml_BRE9A605",
+            "guid": "tag:example.com,0000:newsml_BRE9A605",
             "type": "picture",
             "headline": "lorem ipsum",
             "versioncreated": "2014-03-16T06:49:47+0000",
             "language": "en",
             "mimetype": "text/plain",
             "pubstatus": "usable",
-            "version": "1"
+            "version": 1
     	}]
     	"""
         Then we get response code 201
@@ -28,7 +28,7 @@ Feature: Publish service
 		            "language": "en",
 		            "mimetype": "text/plain",
 		            "pubstatus": "usable",
-		            "version": "1"
+		            "version": 1
 	            }
 	        ]
         }
@@ -45,7 +45,7 @@ Feature: Publish service
             "language": "en",
             "mimetype": "text/plain",
             "pubstatus": "usable",
-            "versions": "1"
+            "versions": 1
     	}]
     	"""
         Then we get error 422

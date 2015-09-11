@@ -32,7 +32,7 @@ class ResourceConfigTestCase(PublishResourceTestCase):
 
     def test_schema(self):
         field_types = {
-            '_id': 'string',
+            'guid': 'string',
             'associations': 'dict',
             'body_html': 'string',
             'body_text': 'string',
@@ -55,7 +55,7 @@ class ResourceConfigTestCase(PublishResourceTestCase):
             'uri': 'string',
             'urgency': 'integer',
             'usageterms': 'string',
-            'version': 'string',
+            'version': 'integer',
             'versioncreated': 'datetime',
         }
 
@@ -74,7 +74,7 @@ class ResourceConfigTestCase(PublishResourceTestCase):
 
     def test_allowed_publish_http_methods(self):
         klass = self._get_target_class()
-        self.assertEqual(klass.item_methods, ['PATCH', 'DELETE'])
+        self.assertEqual(klass.item_methods, ['GET'])
 
     def test_allowed_resource_http_methods(self):
         klass = self._get_target_class()

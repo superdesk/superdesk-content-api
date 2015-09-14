@@ -54,7 +54,7 @@ class ResourceConfigTestCase(ItemsResourceTestCase):
             'uri': 'string',
             'urgency': 'integer',
             'usageterms': 'string',
-            'version': 'string',
+            'version': 'integer',
             'versioncreated': 'datetime',
         }
 

@@ -34,8 +34,8 @@ schema = {
     'urgency': {'type': 'integer'},
     'uri': {'type': 'string'},
     'usageterms': {'type': 'string'},
-    'version': {'type': 'string'},
-    'versioncreated': {'type': 'datetime'},
+    'version': {'type': 'integer', 'required': True},
+    'versioncreated': {'type': 'datetime', 'required': True},
 }
 
 

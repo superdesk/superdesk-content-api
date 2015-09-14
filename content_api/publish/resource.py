@@ -24,12 +24,12 @@ class PublishResource(Resource):
     #
     item_url = 'regex("[\w,.:-]+")'
     schema = copy(schema)
-    schema.update(_id={'type': 'string'})
+    schema.update(guid={'type': 'string', 'required': True})
 
     datasource = {
         'source': 'items',
         'search_backend': 'elastic',
     }
 
-    item_methods = ['PATCH', 'DELETE']
+    item_methods = ['GET']
     resource_methods = ['POST']

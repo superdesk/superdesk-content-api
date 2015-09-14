@@ -7,6 +7,7 @@
 # For the full copyright and license information, please see the
 # AUTHORS and LICENSE files distributed with this source code, or
 # at https://www.sourcefabric.org/superdesk/license
+from superdesk.validator import SuperdeskValidator
 
 """
 A module that provides the Superdesk public API application object and runs
@@ -23,6 +24,7 @@ from eve import Eve
 from eve.io.mongo.mongo import MongoJSONEncoder
 from eve.render import send_response
 from flask.ext.mail import Mail  # @UnresolvedImport
+from raven.contrib.flask import Sentry
 import importlib
 import logging
 import os
@@ -35,6 +37,8 @@ from superdesk.errors import SuperdeskError, SuperdeskApiError
 
 
 logger = logging.getLogger('superdesk')
+
+sentry = Sentry(register_signal=False, wrap_wsgi=False)
 
 
 def _set_error_handlers(app):
@@ -80,17 +84,12 @@ def get_app(config=None):
         if key.isupper():
             config.setdefault(key, getattr(settings, key))
 
-    media_storage = SuperdeskGridFSMediaStorage
-
-#     if config.get('AMAZON_CONTAINER_NAME', None):
-#         from superdesk.storage.amazon.amazon_media_storage import AmazonMediaStorage  # @UnresolvedImport
-#         media_storage = AmazonMediaStorage
-
     app = Eve(
         settings=config,
         data=SuperdeskDataLayer,
-        media=media_storage,
+        media=SuperdeskGridFSMediaStorage,
         json_encoder=MongoJSONEncoder,
+        validator=SuperdeskValidator
     )
 
     superdesk.app = app
@@ -110,5 +109,8 @@ def get_app(config=None):
     for blueprint in superdesk.BLUEPRINTS:
         prefix = app.api_prefix or None
         app.register_blueprint(blueprint, url_prefix=prefix)
+
+    app.sentry = sentry
+    sentry.init_app(app)
 
     return app

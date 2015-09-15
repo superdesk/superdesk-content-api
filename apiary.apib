@@ -1,0 +1,501 @@
+FORMAT: 1A
+HOST: http://api.superdesk.org/v1/
+
+# Superdesk Content API
+
+The Superdesk Content Delivery API is an Open API. It aims to empower news
+organisations using Superdesk to open up their content to a broad community of
+innovative developers and encourage the development of a diversity of news
+applications.
+
+# Current Version
+
+TODO
+
+# Content Schema
+
+TODO
+
+# Response Format
+
+TODO
+
+# HTTP Verbs
+
+TODO
+
+# Status Codes
+
+TODO
+
+# Authentication
+
+TODO 
+
+
+# Group API Resources
+
+## Root Endpoint [/]
+
+### Fetch all available resources [GET]
+
++ Response 200 (application/json)
+
+        {
+            "_links": {
+                "child": [
+                    {
+                        "title": "items/<path:item>",
+                        "href": "/items/<path:item>"
+                    }, {
+                        "title": "items",
+                        "href": "/items"
+                    }, {
+                        "title": "packages/<path:package>",
+                        "href": "/packages/<path:package>"
+                    }, {
+                        "title": "packages",
+                        "href": "/packages"
+                    }
+                ]
+            }
+        }
+
+# Group Content Items
+
+In Superdesk, a News Item is a generic container for any type of news content.
+Photos, text, audio, video and graphics are all represented as News Items.
+
+## News Item [/items/{_id}]
+
+
+### Fetch a single News Item [GET]
+
+This method is used to retrieve a particular item as a NewsML-G2 News Item
+document in its ninjs (News in JSON) representation. To invoke this method, you
+must know the item Id of the News Item you want to retrieve.
+
++ Parameters
+    + _id (required, string, `1`) ... Identifier of the News Item you want to retrieve.
+
++ Response 200 (application/json)
+
+            {
+                "_etag": "abc",
+                "_links": {
+                    "self": {
+                        "href": "/media/1"
+                    }
+                },
+                "abstract": "abstract needed...",
+                "byline": "John Doe",
+                "copyrightholder": "Sourcefabric z.u.",
+                "copyrightnotice": "(c) Copyright Sourcefabric z.u. 2015",
+                "description_text": "Flower picture",
+                "filemeta": {
+                    "Manufacturer": "CANON", "Orientation": "landscape"
+                },
+                "firstcreated": "2013-07-03T10:11:12Z",
+                "headline": "No news today",
+                "language": "en",
+                "mimetype": "image/jpeg",
+                "provider": "My Company LTD",
+                "pubstatus": "usable",
+                "renditions": {
+                    "original": {
+                        "height": 3462,
+                        "href": "http://farm4.staticflickr.com/3665/9203816834_9f62964627_o_d.jpg",
+                        "mimetype": "image/jpeg",
+                        "width": 5198
+                    },
+                    "thumbnail": {
+                        "height": 150,
+                        "href": "http://farm4.staticflickr.com/3665/9203816834_3329fac058_q_d.jpg",
+                        "mimetype": "image/jpeg",
+                        "width": 150
+                    }
+                },
+                "type": "picture",
+                "urgency": 4,
+                "uri": "tag:mycomp-ltd.com,0000:newsml_LM1EA5F0UUD01",
+                "usageterms": "You are not allowed.",
+                "version": "1",
+                "versioncreated": "2013-07-03T10:11:12Z"
+            }
+
+## News Item Collection [/items/?q={q}&type={type}&start_date={start_date}&end_date={end_date}&fields={fields}&limit={limit}]
+
+### List News Items [GET]
+
+This method is used to retrieve a list of News Items.
+
++ The method will return a maximum of 200 items.
++ The items retrieved by this method will be sorted in reverse chronological
+  order (i.e., newest items first).
+
+
++ Parameters
+    + q (optional, object) ... Search query.
+    + type (optional, string) ... Specifies the content type for the news items
+      to be retrieved. Valid content types are: text, image, video and audio.
+      Default value: All available media types will be retrieved.
+    + start_date (optional, date) ... The start of the date range for the news
+      items to be retrieved. If no start date is specified, the news items
+      returned will be limited to the last 24 hours.
+    + end_date (optional, date) ... The end of the date range for the news items
+      to be retrieved. If no end date is specified, the assumed end date will be
+      the current time.
+    + fields (optional, list) ... The list of fields associated with content to
+      be retrieved. Default value: All available fields will be retrieved.
+    + limit (optional, number, `25`) ... The max. number of items to be retrieved.
+      There is a hard limit of 200 items for this parameter.
+
++ Response 200 (application/json)
+
+        {
+            "_items": [
+                {
+                    "uri": "tag:superdesk.org,0000:newsml_LM1EA5F0UUD01",
+                    "type": "text",
+                    "headline": "Why failure isn't a dirty word",
+                    "body_html": "<p>When JK Rowling delivered the 2008 Harvard commencement speech about failure, her audience consisted of hundreds of students, their families and the university’s faculty. But the impact of her words that day have since reached far wider.</p>",
+                    "description_text": "text item"
+                }, {
+                    "uri": "tag:superdesk.org,0000:newsml_LM1EA5F0UUD13",
+                    "type": "picture",
+                    "mimetype": "image/jpeg",
+                    "description_text": "picture item - also applicable to audio/video",
+                    "renditions": {
+                        "original": {
+                            "href": "http://farm4.staticflickr.com/3665/9203816834_9f62964627_o_d.jpg",
+                            "mimetype": "image/jpeg",
+                            "width": 5198,
+                            "height": 3462
+                        }
+                    }
+                }, {
+                    "uri": "tag:superdesk.org,0000:newsml_LM1EA5F0UUD07",
+                    "type": "text",
+                    "headline": "The fat-burning and energy-producing gyms",
+                    "body_html": "<p>Professor Mawby feels that experiments like that at Cadbury House have a primary benefit is that they are making people aware. Through active engagement members are forced to acknowledge the physical value of energy and the cost of expanse of its wastage. </p>",
+                    "description_text": "text item"
+                }, {
+                    "uri": "tag:superdesk.org,0000:newsml_LM1EA5F0UUD11",
+                    "type": "text",
+                    "headline": "The best pranks in children's books",
+                    "body_html": "<p><strong>Mac:</strong> OK, fifth! Thanks, Henry. It’s exciting to be sharing these recommendations in The Guardian, with our UK readers. When I lived in London, I read The Guardian every day. Also, like some rappers, I demand to be paid only in British pounds. </p>",
+                    "description_text": "text item"
+                }
+            ]
+        }
+
+
+# Group Content Packages
+
+Package Items contain grouped references to multiple News Items.
+
+## Package [/packages/{_id}]
+
+### Fetch a single Package Item [GET]
+
+The item method is used to retrieve a particular NewsML-G2 Package Item in
+its ninjs (News in JSON) representation.
+
++ Parameters
+    - _id (string, `1`) ... Package Identifier.
+
++ Response 200 (application/json)
+
+        {
+            "_created": "2014-12-11T13:20:18+0000",
+            "_etag": "194506956b64410edbf2e175a13adf3cc2df921d",
+            "_id": "urn:newsml:localhost:2014-12-11T15:20:18.510755:65b31275-0513-4ee5-9879-1ef9fae5fa33",
+            "_latest_version": 3,
+            "_links": {
+                "collection": {"href": "/packages", "title": "packages"},
+                "parent": {"href": "/", "title": "home"},
+                "self": {
+                    "href": "/packages/urn:newsml:localhost:2014-12-11T15:20:18.510755:65b31275-0513-4ee5-9879-1ef9fae5fa33",
+                    "title": "Package"
+                }
+            },
+            "_updated": "2014-12-11T14:01:27+0000",
+            "_version": 3,
+            "description": "MARKETS-HONGKONG-STOCKS/CLOSE (URGENT):Hong Kong shares end lower on profit-taking, China slump",
+            "firstcreated": "2014-12-11T13:20:18+0000",
+            "groups": [
+                {"id": "root", "refs": [{"idRef": "main"}], "role": "grpRole:NEP"},
+                {
+                    "id": "main",
+                    "refs": [
+                        {
+                            "guid": "tag:reuters.com,0000:newsml_ZZN2NBZ00",
+                            "headline": "Hong Kong shares end lower on profit-taking, China slump",
+                            "location": "archive",
+                            "renditions": {},
+                            "residRef": "tag:reuters.com,0000:newsml_ZZN2NBZ00",
+                            "slugline": "MARKETS-HONGKONG-STOCKS/CLOSE (URGENT)",
+                            "type": "text"
+                        },
+                        {
+                            "guid": "tag:reuters.com,0000:newsml_GM1EAC918J701",
+                            "headline": "Servicemen from the Georgian Armed Forces stand at attention during a farewell ceremony at the Vaziani military base outside Tbilisi",
+                            "location": "archive",
+                            "renditions": {
+                                "baseImage": {
+                                    "href": "http://localhost:5000/api/upload/5486b1674ee1f90ae02e936a/raw?_schema=http",
+                                    "media": "5486b1674ee1f90ae02e936a",
+                                    "mimetype": "image/jpeg",
+                                    "rendition": "baseImage",
+                                    "residRef": "tag:reuters.com,0000:binary_GM1EAC918J701-BASEIMAGE",
+                                    "sizeinbytes": 738762
+                                },
+                                "thumbnail": {
+                                    "href": "http://localhost:5000/api/upload/5486b1664ee1f90ae12e936a/raw?_schema=http",
+                                    "media": "5486b1664ee1f90ae12e936a",
+                                    "mimetype": "image/jpeg",
+                                    "rendition": "thumbnail",
+                                    "residRef": "tag:reuters.com,0000:binary_GM1EAC918J701-THUMBNAIL",
+                                    "sizeinbytes": 18874
+                                },
+                                "viewImage": {
+                                    "href": "http://localhost:5000/api/upload/5486b1674ee1f90adf2e936d/raw?_schema=http",
+                                    "media": "5486b1674ee1f90adf2e936d",
+                                    "mimetype": "image/jpeg",
+                                    "rendition": "viewImage",
+                                    "residRef": "tag:reuters.com,0000:binary_GM1EAC918J701-VIEWIMAGE",
+                                    "sizeinbytes": 188030
+                                }
+                            },
+                            "residRef": "tag:reuters.com,0000:newsml_GM1EAC918J701",
+                            "slugline": "GEORGIA-MILITARY/",
+                            "type": "picture"
+                        },
+                        {
+                            "guid": "tag:reuters.com,2014:newsml_LYNXMPEAB80B9",
+                            "headline": "An elderly woman shields herself from the rain brought by Typhoon Hagupit in Noveleta town, Cavite province, south of Manila",
+                            "location": "archive",
+                            "renditions": {
+                                "baseImage": {
+                                    "href": "http://localhost:5000/api/upload/5486b16a4ee1f90ae22e9372/raw?_schema=http",
+                                    "media": "5486b16a4ee1f90ae22e9372",
+                                    "mimetype": "image/jpeg",
+                                    "rendition": "baseImage",
+                                    "residRef": "tag:reuters.com,2014:binary_LYNXMPEAB80B9-BASEIMAGE",
+                                    "sizeinbytes": 43248
+                                },
+                                "filedImage": {
+                                    "href": "http://localhost:5000/api/upload/5486b16c4ee1f90ae22e9374/raw?_schema=http",
+                                    "media": "5486b16c4ee1f90ae22e9374",
+                                    "mimetype": "image/jpeg",
+                                    "rendition": "filedImage",
+                                    "residRef": "tag:reuters.com,2014:binary_LYNXMPEAB80B9-FILEDIMAGE",
+                                    "sizeinbytes": 708156
+                                },
+                                "thumbnail": {
+                                    "href": "http://localhost:5000/api/upload/5486b16a4ee1f90adf2e936f/raw?_schema=http",
+                                    "media": "5486b16a4ee1f90adf2e936f",
+                                    "mimetype": "image/jpeg",
+                                    "rendition": "thumbnail",
+                                    "residRef": "tag:reuters.com,2014:binary_LYNXMPEAB80B9-THUMBNAIL",
+                                    "sizeinbytes": 4859
+                                },
+                                "viewImage": {
+                                    "href": "http://localhost:5000/api/upload/5486b16a4ee1f90ae02e9371/raw?_schema=http",
+                                    "media": "5486b16a4ee1f90ae02e9371",
+                                    "mimetype": "image/jpeg",
+                                    "rendition": "viewImage",
+                                    "residRef": "tag:reuters.com,2014:binary_LYNXMPEAB80B9-VIEWIMAGE",
+                                    "sizeinbytes": 18766
+                                }
+                            },
+                            "residRef": "tag:reuters.com,2014:newsml_LYNXMPEAB80B9",
+                            "slugline": "PHILIPPINES-TYPHOON",
+                            "type": "picture"
+                        }
+                    ],
+                    "role": "grpRole:main"
+                }
+            ],
+            "guid": "urn:newsml:localhost:2014-12-11T15:20:18.510755:65b31275-0513-4ee5-9879-1ef9fae5fa33",
+            "headline": "Hong Kong shares end lower on profit-taking, China slump",
+            "language": "en",
+            "original_creator": "5481aab74ee1f927e56944cc",
+            "pubstatus": "Usable",
+            "slugline": "MARKETS-HONGKONG-STOCKS/CLOSE (URGENT)",
+            "type": "composite",
+            "unique_id": 5266,
+            "unique_name": "#5266",
+            "version_creator": "5481aab74ee1f927e56944cc",
+            "versioncreated": "2014-12-11T14:01:27+0000"
+        }
+
+## Package Collection [/packages/?start_date={start_date}&end_date={end_date}&fields={fields}&limit={limit}]
+
+### List Package Items [GET]
+
+The packages method is used to obtain a list of package items.
+
++ The method will return a maximum of 200 items.
++ The items retrieved by this method will be sorted in reverse chronological
+  order (i.e., newest items first).
+
++ Parameters
+    + start_date (optional, date) ... The start of the date range for the news
+      items to be retrieved. If no start date is specified, the news items
+      returned will be limited to the last 24 hours.
+    + end_date (optional, date) ... The end of the date range for the news items
+      to be retrieved. If no end date is specified, the assumed end date will be
+      the current time.
+    + fields (optional, list) ... The list of fields associated with content to
+      be retrieved. Default value: All available fields will be retrieved.
+    + limit (optional, number, `25`) ... The max. number of items to be retrieved.
+      There is a hard limit of 200 items for this parameter.
+
++ Response 200 (application/json)
+
+        {
+            "_items": [
+                {
+                    "type": "composite",
+                    "description_text": "a story like package with main content and sidebar",
+                    "groups": [
+                        {
+                            "id": "root",
+                            "role": "grpRole:NEP",
+                            "refs": [
+                                {"idRef": "main"},
+                                {"idRef": "sidebar"}
+                            ]
+                        },
+                        {
+                            "id": "main",
+                            "role": "grpRole:Main",
+                            "refs": [
+                                {
+                                    "mimetype": "application/vnd.iptc.g2.newsitem+xml",
+                                    "provider": "sourcefabric.org",
+                                    "residRef": "tag:sourcefabric.org,0000:newsml_BRE9AG0DM",
+                                    "type": "text",
+                                    "headline": "per package caption"
+                                },
+                                {
+                                    "mimetype": "application/vnd.iptc.g2.newsitem+xml",
+                                    "provider": "sourcefabric.org",
+                                    "residRef": "tag:sourcefabric.org,0000:newsml_CBRE9AG1HCJ00",
+                                    "type": "picture",
+                                    "headline": "picture caption"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "sidebar",
+                            "role": "grpRole:Sidebar",
+                            "refs": [
+                                {
+                                    "mimetype": "application/vnd.iptc.g2.newsitem+xml",
+                                    "provider": "sourcefabric.org",
+                                    "residRef": "tag:sourcefabric.org,0000:newsml_BRE9AR0FF",
+                                    "type": "text",
+                                    "headline": "sidebar text caption"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "composite",
+                    "description_text": "a story like package with main content and sidebar",
+                    "groups": [
+                        {
+                            "id": "root",
+                            "role": "grpRole:NEP",
+                            "refs": [
+                                {"idRef": "main"},
+                                {"idRef": "sidebar"}
+                            ]
+                        },
+                        {
+                            "id": "main",
+                            "role": "grpRole:Main",
+                            "refs": [
+                                {
+                                    "mimetype": "application/vnd.iptc.g2.newsitem+xml",
+                                    "provider": "sourcefabric.org",
+                                    "residRef": "tag:sourcefabric.org,0000:newsml_BRE9AG0DM",
+                                    "type": "text",
+                                    "headline": "per package caption"
+                                },
+                                {
+                                    "mimetype": "application/vnd.iptc.g2.newsitem+xml",
+                                    "provider": "sourcefabric.org",
+                                    "residRef": "tag:sourcefabric.org,0000:newsml_CBRE9AG1HCJ00",
+                                    "type": "picture",
+                                    "headline": "picture caption"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "sidebar",
+                            "role": "grpRole:Sidebar",
+                            "refs": [
+                                {
+                                    "mimetype": "application/vnd.iptc.g2.newsitem+xml",
+                                    "provider": "sourcefabric.org",
+                                    "residRef": "tag:sourcefabric.org,0000:newsml_BRE9AR0FF",
+                                    "type": "text",
+                                    "headline": "sidebar text caption"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "composite",
+                    "description_text": "a story like package with main content and sidebar",
+                    "groups": [
+                        {
+                            "id": "root",
+                            "role": "grpRole:NEP",
+                            "refs": [
+                                {"idRef": "main"},
+                                {"idRef": "sidebar"}
+                            ]
+                        },
+                        {
+                            "id": "main",
+                            "role": "grpRole:Main",
+                            "refs": [
+                                {
+                                    "mimetype": "application/vnd.iptc.g2.newsitem+xml",
+                                    "provider": "sourcefabric.org",
+                                    "residRef": "tag:sourcefabric.org,0000:newsml_BRE9AG0DM",
+                                    "type": "text",
+                                    "headline": "per package caption"
+                                },
+                                {
+                                    "mimetype": "application/vnd.iptc.g2.newsitem+xml",
+                                    "provider": "sourcefabric.org",
+                                    "residRef": "tag:sourcefabric.org,0000:newsml_CBRE9AG1HCJ00",
+                                    "type": "picture",
+                                    "headline": "picture caption"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "sidebar",
+                            "role": "grpRole:Sidebar",
+                            "refs": [
+                                {
+                                    "mimetype": "application/vnd.iptc.g2.newsitem+xml",
+                                    "provider": "sourcefabric.org",
+                                    "residRef": "tag:sourcefabric.org,0000:newsml_BRE9AR0FF",
+                                    "type": "text",
+                                    "headline": "sidebar text caption"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }

@@ -56,7 +56,9 @@ def _set_error_handlers(app):
     # replace it with a new 500 error handler tailored for the public API app)
     @app.errorhandler(SuperdeskError)
     def client_error_handler(error):
-        return send_response(None, (error.to_dict(), None, None, error.status_code))
+        error_dict = error.to_dict()
+        error_dict.update(internal_error=error.status_code)
+        return send_response(None, (error_dict, None, None, 422))
 
     @app.errorhandler(500)
     def server_error_handler(error):
@@ -84,10 +86,15 @@ def get_app(config=None):
         if key.isupper():
             config.setdefault(key, getattr(settings, key))
 
+    media_storage = SuperdeskGridFSMediaStorage
+    if config.get('AMAZON_CONTAINER_NAME'):
+        from superdesk.storage.amazon.amazon_media_storage import AmazonMediaStorage
+        media_storage = AmazonMediaStorage
+
     app = Eve(
         settings=config,
         data=SuperdeskDataLayer,
-        media=SuperdeskGridFSMediaStorage,
+        media=media_storage,
         json_encoder=MongoJSONEncoder,
         validator=SuperdeskValidator
     )

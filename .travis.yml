@@ -19,7 +19,7 @@ install:
 
 script:
     - nosetests --with-coverage --cover-package=content_api
-    - behave --format progress2 --logging-level ERROR content_api/features
+    - behave --format progress2 --logging-level ERROR features
     - flake8
 
 after_script:

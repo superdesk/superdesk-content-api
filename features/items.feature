@@ -94,9 +94,9 @@ Feature: Public content
         When we get "/items"
         Then we get list with 0 items
         When we get "/items?start_date=2015-02-01&end_date=2014-03-5"
-        Then we get error 10002
+        Then we get error 422
         """
-        {"_issues": "Start date must not be greater than end date", "_status": "ERR", "_message": "Bad parameter value."}
+        {"internal_error": 10002, "_issues": "Start date must not be greater than end date", "_status": "ERR", "_message": "Bad parameter value."}
         """
 
     Scenario: Error on missing rendition
@@ -136,9 +136,9 @@ Feature: Public content
         }
         """
         When we get "/assets/6590c3cd46e6da7ea5e70b90/raw"
-        Then we get error 10003
+        Then we get error 422
         """
-        {"_issues": "File not found on media storage.", "_status": "ERR", "_message": "File not found."}
+        {"internal_error": 10003, "_issues": "File not found on media storage.", "_status": "ERR", "_message": "File not found."}
         """
 
     Scenario: Search by text

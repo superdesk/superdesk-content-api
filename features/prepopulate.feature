@@ -38,4 +38,11 @@ Feature: Prepopulate public content
     	"""
     	[{"profile": "invalid profile"}]
     	"""
-        Then we get error 404
+        Then we get error 422
+        """
+        {
+            "internal_error": 404,
+            "_status": "ERR",
+            "_message": "Prepopulate profile not found"
+        }
+        """

@@ -1,1 +1,0 @@
-contentapi: gunicorn -c content_api/gunicorn_config.py content_api.wsgi

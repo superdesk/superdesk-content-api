@@ -3,34 +3,99 @@ HOST: http://api.superdesk.org/v1/
 
 # Superdesk Content API
 
-The Superdesk Content Delivery API is an Open API. It aims to empower news
-organisations using Superdesk to open up their content to a broad community of
+The Superdesk Content Delivery API is a public API. It aims to empower news
+organizations using Superdesk to open up their content to a broad community of
 innovative developers and encourage the development of a diversity of news
-applications.
+applications to engage readers wherever they are.
 
 # Current Version
 
-TODO
+We are currently developing the __Superdesk Content API v1__ version, the release
+date is yet to be announced.
 
-# Content Schema
+When working with the __Superdesk Content API__, you must explicitly request the
+version of the API you want to use via URL, as in the following request:
 
-TODO
+```
+https://api.superdesk.org/v1/items
+```
+
+# Content Model
+
+Content in Superdesk is organized following the __News Architecture__ schema defined as
+part of the [NewsML-G2](https://iptc.org/standards/newsml-g2/) standard for exchanging
+news and news management.
+
+The Superdesk Content API delivers __news items__ and __packages__. A __News Item__
+represents individual general news where the content can be textual, photos, graphics,
+audio and video. A __Package Item__ is a structured bundle of __news items__.
+
+...
 
 # Response Format
 
-TODO
+All API access is over HTTPS, and accessed through yourdomain.com/api/v1/. All
+news content is delivered as JSON data. Images, audio clips, videos and other media
+assets are delivered as files.
+
+...
 
 # HTTP Verbs
 
-TODO
+| Action    | Verb      | Description                                        |
+| --------- | :-------: | -------------------------------------------------: |
+| Create    | POST      | Used for creating resources                        |
+| Create    | PUT       | Used for replacing resources or collections        |
+| Replace   | PUT       |                                                    |
+| Read      | GET, HEAD | Used for retrieving resources                      |
+| Update    | PATCH     | Used for updating resources with partial JSON data |
+| Delete    | DELETE    | Used for deleting resources                        |
 
 # Status Codes
 
-TODO
+Whenever something goes wrong with an API request, the server produces an error.
+The error message contains an appropriate HTTP status code in the header and a
+JSON response in the body.
+
+| HTTP Status Code    | Error Code         | Description                                                  |
+| ------------------- | :----------------: | -----------------------------------------------------------: |
+| 400                 | BadRequest         | The request is malformed or a required parameter is missing. |
+| 401                 | Unauthorized       | The authorization token is not valid.                        |
+| 403                 | Forbidden          |                                                              |
+| 404                 | NotFound           | The requested resource/endpoint can not be found.            |
+| 412                 | PreconditionFailed |                                                              |
+| 500                 | InternalError      | Something has gone wrong on our end.                         |
 
 # Authentication
 
-TODO 
+TODO
+
+# SDK Libraries
+
+SDKs are simply wrappers around the RESTful API to provide an added level of convenience
+for developers. If you are planning to write an application that handles Superdesk content,
+the SDK is the way to go to interact with the Content API.
+
+## PHP
+
+https://github.com/superdesk/contentapi-sdk-php
+
+```
+git clone git@github.com:superdesk/contentapi-sdk-php.git
+``` 
+
+If you can't find an SDK for your language of choice, you can help us building it by
+yourself and contributing it to the Superdesk community. We are planning to work on
+new SDKs and this is the space to watch in order to know about it.
+
+# API Updates
+
+To learn about future enhancements to the Content API and new versions of it, keep an
+eye on this space. We will make sure you are properly informed on any changes made.
+
+# Support
+
+TODO
 
 
 # Group API Resources

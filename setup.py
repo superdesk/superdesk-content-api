@@ -20,18 +20,23 @@ REQUIREMENTS = [str(ir.req) for ir in parse_requirements('requirements.txt', ses
                 if not (getattr(ir, 'link', False) or getattr(ir, 'url', False))]
 
 setup(
-    name='Superdesk-Public-API',
+    name='Superdesk-Content-API',
     version='0.0.1-dev',
-    description='Superdesk PUBLIC API REST server',
+    description='Superdesk Content API server',
     long_description=LONG_DESCRIPTION,
-    author='adrian magdas',
-    author_email='adrian.magdas@sourcefabric.org',
-    url='https://github.com/superdesk/superdesk-public-content_api',
+    author='petr jasek',
+    author_email='petr.jasek@sourcefabric.org',
+    url='https://github.com/superdesk/superdesk-content-api',
     license='GPLv3',
     platforms=['any'],
-    packages=find_packages(),
+    packages=find_packages('content_api'),
     install_requires=REQUIREMENTS,
-    scripts=['content_api_manage.py'],
+    scripts=[
+        'content_api_manage.py',
+        'wsgi.py',
+        'run.py',
+        'gunicorn_config.py'
+    ],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',

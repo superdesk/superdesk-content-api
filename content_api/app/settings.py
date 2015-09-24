@@ -60,7 +60,6 @@ server_url = urlparse(PUBLICAPI_URL)
 URL_PREFIX = server_url.path.strip('/')
 SERVER_NAME = server_url.netloc or None
 URL_PROTOCOL = server_url.scheme or None
-DATE_FORMAT = '%Y-%m-%dT%H:%M:%S+0000'
 
 # Amazon S3 assets management
 AMAZON_CONTAINER_NAME = env('AMAZON_CONTAINER_NAME', '')

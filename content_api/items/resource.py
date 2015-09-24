@@ -32,6 +32,7 @@ schema = {
     'subject': {'type': 'list'},
     'type': {'type': 'string'},
     'urgency': {'type': 'integer'},
+    'priority': {'type': 'integer'},
     'uri': {'type': 'string'},
     'usageterms': {'type': 'string'},
     'version': {'type': 'integer', 'required': True},

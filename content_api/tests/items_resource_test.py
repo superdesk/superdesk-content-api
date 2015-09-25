@@ -30,47 +30,6 @@ class ItemsResourceTestCase(ApiTestCase):
 class ResourceConfigTestCase(ItemsResourceTestCase):
     """Tests for the configuration of the `items` resource."""
 
-    def test_schema(self):
-        field_types = {
-            'associations': 'dict',
-            'body_html': 'string',
-            'body_text': 'string',
-            'byline': 'string',
-            'copyrightnotice': 'string',
-            'description_html': 'string',
-            'description_text': 'string',
-            'headline': 'string',
-            'language': 'string',
-            'located': 'string',
-            'mimetype': 'string',
-            'organization': 'list',
-            'person': 'list',
-            'place': 'list',
-            'profile': 'string',
-            'pubstatus': 'string',
-            'renditions': 'dict',
-            'subject': 'list',
-            'type': 'string',
-            'uri': 'string',
-            'urgency': 'integer',
-            'usageterms': 'string',
-            'version': 'integer',
-            'versioncreated': 'datetime',
-        }
-
-        klass = self._get_target_class()
-        schema = klass.schema or {}
-
-        if (len(schema) > len(field_types)):
-            self.fail("Schema contains some unexpected fields")
-
-        for field_name, field_type in field_types.items():
-            field_info = schema.get(field_name)
-            if field_info is None:
-                self.fail("No type info for field {}".format(field_name))
-            else:
-                self.assertEqual(field_info.get('type'), field_type)
-
     def test_datasource_filter_is_set_to_non_composite_types(self):
         klass = self._get_target_class()
         datasource = klass.datasource or {}

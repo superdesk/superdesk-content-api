@@ -26,5 +26,6 @@ do
 done
 echo "All services are started :3"
 
+cd $(readlink -e $(dirname "$0")/../) &&
 "$@" &&
 exit 0

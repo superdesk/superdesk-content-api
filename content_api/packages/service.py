@@ -55,6 +55,7 @@ class PackagesService(ItemsService):
 
         :param dict document: MongoDB document representing a package object
         """
-        for _name, target_obj in document.get('associations', {}).items():
-            target_obj['uri'] = self._get_uri(target_obj)
-            del target_obj['_id']
+        for item in (item for _name, target_obj in document.get('associations', {}).items()
+                     for item in target_obj):
+            item['uri'] = self._get_uri(item)
+            del item['_id']

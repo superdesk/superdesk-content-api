@@ -37,6 +37,7 @@ MONGO_URI = env('MONGO_URI', 'mongodb://localhost/%s' % MONGO_DBNAME)
 ELASTICSEARCH_URL = env('ELASTICSEARCH_URL', 'http://localhost:9200')
 ELASTICSEARCH_INDEX = env('ELASTICSEARCH_INDEX', MONGO_DBNAME)
 ELASTIC_DATE_FORMAT = '%Y-%m-%d'
+DATE_FORMAT = '%Y-%m-%dT%H:%M:%S+0000'
 
 REDIS_URL = env('REDIS_URL', 'redis://localhost:6379')
 if env('REDIS_PORT'):
@@ -60,7 +61,6 @@ server_url = urlparse(PUBLICAPI_URL)
 URL_PREFIX = server_url.path.strip('/')
 SERVER_NAME = server_url.netloc or None
 URL_PROTOCOL = server_url.scheme or None
-DATE_FORMAT = '%Y-%m-%dT%H:%M:%S+0000'
 
 # Amazon S3 assets management
 AMAZON_CONTAINER_NAME = env('AMAZON_CONTAINER_NAME', '')

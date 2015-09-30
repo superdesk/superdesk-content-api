@@ -305,11 +305,8 @@ class ItemsService(BaseService):
 
         date_filter = {'range': {'versioncreated': {}}}
 
-        date_filter['range']['versioncreated']['from'] = self._format_date(start_date)
-
-        # need to set it to strictly less than end_date + 1 day,
-        # because internally dates are stored as datetimes
-        date_filter['range']['versioncreated']['to'] = self._format_date(end_date)
+        date_filter['range']['versioncreated']['gte'] = self._format_date(start_date)
+        date_filter['range']['versioncreated']['lte'] = self._format_date(end_date)
 
         return date_filter
 

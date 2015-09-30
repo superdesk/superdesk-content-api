@@ -299,8 +299,8 @@ class GetMethodTestCase(ItemsServiceTestCase):
 
         date_filter = json.loads(args[0].args['filter']).get('range', {}).get('versioncreated', {})
         expected_filter = {
-            'from': '2012-08-21',
-            'to': '2012-08-26'
+            'gte': '2012-08-21',
+            'lte': '2012-08-26'
         }
         self.assertEqual(date_filter, expected_filter)
 
@@ -340,8 +340,8 @@ class GetMethodTestCase(ItemsServiceTestCase):
 
         date_filter = json.loads(args[0].args['filter']).get('range', {}).get('versioncreated', {})
         expected_filter = {
-            'from': '2012-08-21',
-            'to': '2014-07-15'
+            'gte': '2012-08-21',
+            'lte': '2014-07-15'
         }
         self.assertEqual(date_filter, expected_filter)
 
@@ -359,8 +359,8 @@ class GetMethodTestCase(ItemsServiceTestCase):
 
         date_filter = json.loads(args[0].args['filter']).get('range', {}).get('versioncreated', {})
         expected_filter = {
-            'from': '2012-08-21',
-            'to': '2012-08-21'
+            'gte': '2012-08-21',
+            'lte': '2012-08-21'
         }
         self.assertEqual(date_filter, expected_filter)
 
@@ -383,8 +383,8 @@ class GetMethodTestCase(ItemsServiceTestCase):
 
         date_filter = json.loads(args[0].args['filter']).get('range', {}).get('versioncreated', {})
         expected_filter = {
-            'from': '2014-07-15',
-            'to': '2014-07-15'
+            'gte': '2014-07-15',
+            'lte': '2014-07-15'
         }
         self.assertEqual(date_filter, expected_filter)
 
@@ -405,8 +405,8 @@ class GetMethodTestCase(ItemsServiceTestCase):
 
         date_filter = json.loads(args[0].args['filter']).get('range', {}).get('versioncreated', {})
         expected_filter = {
-            'from': '2010-09-17',
-            'to': '2010-09-17'
+            'gte': '2010-09-17',
+            'lte': '2010-09-17'
         }
         self.assertEqual(date_filter, expected_filter)
 

@@ -17,6 +17,7 @@ class PackagesResource(ItemsResource):
     datasource = {
         'elastic_filter': {"bool": {"must": {"term": {"type": "composite"}}}},
         'source': 'items',
+        'search_backend': 'elastic',
     }
 
     item_methods = ['GET']

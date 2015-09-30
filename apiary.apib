@@ -3,10 +3,24 @@ HOST: http://api.superdesk.org/v1/
 
 # Superdesk Content API
 
-The Superdesk Content Delivery API is a public API. It aims to empower news
-organizations using Superdesk to open up their content to a broad community of
-innovative developers and encourage the development of a diversity of news
-applications to engage readers wherever they are.
+The Superdesk Content API aims to empower news organizations using Superdesk to open
+up their content to a broad community of innovative developers and encourage the
+development of a diversity of news applications to engage readers wherever they are.
+
+# Overview
+
+The Superdesk Content API focuses on delivering news content. There are no
+endpoints for fetching other resources such as users, desks or workflow activity.
+You also cannot perform management operations to, for example, update or remove
+news content.
+
+API requests to retrieve news text items and media assets can be made through:
+
+```
+https://<your.subdomain>/v1/
+```
+
+All requests must be made over __https__. All data is sent and received in JSON.
 
 # Current Version
 
@@ -20,25 +34,30 @@ version of the API you want to use via URL, as in the following request:
 https://api.superdesk.org/v1/items
 ```
 
+# Response Format
+
+All news content is delivered as JSON data. Images, audio clips, videos and other media
+assets are delivered as files.
+
 # Content Model
 
 Content in Superdesk is organized following the __News Architecture__ schema defined as
-part of the [NewsML-G2](https://iptc.org/standards/newsml-g2/) standard for exchanging
-news and news management.
+part of the [NewsML-G2](https://iptc.org/standards/newsml-g2/) standard developed by
+the [IPTC](https://iptc.org/) for exchanging news and news management.
 
 The Superdesk Content API delivers __news items__ and __packages__. A __News Item__
 represents individual general news where the content can be textual, photos, graphics,
-audio and video. A __Package Item__ is a structured bundle of __news items__.
-
-...
+audio and video. A __Package__ is a structured bundle of __news items__.
 
 # Response Format
 
-All API access is over HTTPS, and accessed through yourdomain.com/api/v1/. All
-news content is delivered as JSON data. Images, audio clips, videos and other media
+All news content is delivered as JSON data. Images, audio clips, videos and other media
 assets are delivered as files.
 
-...
+News content retrieved from the Content API is modeled using [ninjs](http://dev.iptc.org/ninjs)
+(News in JSON). ninjs is an effort by the IPTC to standardize the representation of
+news in JSON and it is designed to be used alongside other IPTC formats, including
+NewsML-G2.
 
 # HTTP Verbs
 
@@ -95,7 +114,11 @@ eye on this space. We will make sure you are properly informed on any changes ma
 
 # Support
 
-TODO
+The Superdesk [development forum](https://forum.sourcefabric.org/categories/superdesk-dev)
+is the best place for questions or to speak to other developers working with the
+Content API.
+
+For more information to stay up to date you can read our [developer blog](http://www.superdesk.org/en/site/news/?filter=Blog).
 
 
 # Group API Resources

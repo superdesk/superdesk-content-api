@@ -85,10 +85,11 @@ def get_prefixed_url(current_app, endpoint):
     return url
 
 
+def get_fixture_path(filename):
+    rootpath = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+    return os.path.join(rootpath, 'features', 'steps', 'fixtures', filename)
+
+
 class TestCase(unittest.TestCase):
     def setUp(self):
         setup(self)
-
-    def get_fixture_path(self, filename):
-        rootpath = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
-        return os.path.join(rootpath, 'features', 'steps', 'fixtures', filename)

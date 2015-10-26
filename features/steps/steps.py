@@ -20,6 +20,7 @@ from wooper.assertions import assert_equal
 
 from superdesk.tests import get_prefixed_url
 from superdesk import get_resource_service
+from content_api.behave_setup import get_fixture_path
 
 
 def get_resource_name(url):
@@ -245,3 +246,22 @@ def step_impl_then_get_error(context, code):
 @then('we get response code {code}')
 def step_impl_then_get_code(context, code):
     expect_status(context.response, int(code))
+
+
+@when('we upload a file "{file_name}" to "{destination}" with "{media_id}"')
+def step_impl_when_upload_image_with_guid(context, file_name, destination, media_id):
+    upload_file(context, destination, file_name, 'media', {'media_id': media_id})
+
+
+def upload_file(context, dest, filename, file_field, extra_data=None, method='post', user_headers=[]):
+    with open(get_fixture_path(filename), 'rb') as f:
+        data = {file_field: f}
+        if extra_data:
+            data.update(extra_data)
+        headers = [('Content-Type', 'multipart/form-data')]
+        headers.extend(user_headers)
+        headers = unique_headers(headers, context.headers)
+        url = get_prefixed_url(context.app, dest)
+        context.response = getattr(context.client, method)(url, data=data, headers=headers)
+        assert_ok(context.response)
+        store_placeholder(context, url)

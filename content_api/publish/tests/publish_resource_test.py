@@ -50,6 +50,7 @@ class ResourceConfigTestCase(PublishResourceTestCase):
             'profile': 'string',
             'pubstatus': 'string',
             'renditions': 'dict',
+            'slugline': 'string',
             'subject': 'list',
             'type': 'string',
             'uri': 'string',

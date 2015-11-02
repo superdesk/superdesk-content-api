@@ -57,7 +57,7 @@ class ResourceConfigTestCase(PublishResourceTestCase):
             'urgency': 'integer',
             'priority': 'integer',
             'usageterms': 'string',
-            'version': 'integer',
+            'version': 'string',
             'versioncreated': 'datetime',
         }
 

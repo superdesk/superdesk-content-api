@@ -11,7 +11,7 @@ Feature: Publish service
             "language": "en",
             "mimetype": "text/plain",
             "pubstatus": "usable",
-            "version": 1
+            "version": "1"
     	}]
     	"""
         Then we get response code 201
@@ -28,7 +28,7 @@ Feature: Publish service
 		            "language": "en",
 		            "mimetype": "text/plain",
 		            "pubstatus": "usable",
-		            "version": 1
+		            "version": "1"
 	            }
 	        ]
         }
@@ -45,7 +45,7 @@ Feature: Publish service
             "language": "en",
             "mimetype": "text/plain",
             "pubstatus": "usable",
-            "versions": 1
+            "versions": "1"
     	}]
     	"""
         Then we get error 422

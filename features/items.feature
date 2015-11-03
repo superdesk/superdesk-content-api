@@ -1,7 +1,8 @@
 Feature: Public content
 
+	@auth
     Scenario: Read an item
-        Given "items"
+    Given "items"
         """
         [{
             "_id": "tag:example.com,0000:newsml_BRE9A605",
@@ -16,6 +17,7 @@ Feature: Public content
         {"headline": "Breaking news in Timbuktu 123", "mimetype": "text/plain"}
         """
 
+	@auth
     Scenario: Item list pagination
       Given "items"
         """
@@ -43,6 +45,7 @@ Feature: Public content
         When we get "/items?max_results=2&page=2&start_date=2014-03-15"
         Then we get list with 1 items
 
+	@auth
     Scenario: Filter by date interval
       Given "items"
         """
@@ -127,6 +130,7 @@ Feature: Public content
         {"internal_error": 10002, "_issues": "Start date must not be greater than end date", "_status": "ERR", "_message": "Bad parameter value."}
         """
 
+	@auth
     Scenario: Error on missing rendition
         Given "items"
         """
@@ -169,6 +173,7 @@ Feature: Public content
         {"internal_error": 10003, "_issues": "File not found on media storage.", "_status": "ERR", "_message": "File not found."}
         """
 
+	@auth
     Scenario: Search by text
       Given "items"
         """
@@ -246,6 +251,7 @@ Feature: Public content
         }
         """
 
+	@auth
     Scenario: Search by phrase
       Given "items"
         """

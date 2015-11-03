@@ -1,5 +1,6 @@
 Feature: Publish service
 
+	@auth
     Scenario: Publish an item
     	When we post to "/publish"
     	"""
@@ -34,6 +35,7 @@ Feature: Publish service
         }
         """
 
+	@auth
     Scenario: Publish an item with error
     	When we post to "/publish"
     	"""

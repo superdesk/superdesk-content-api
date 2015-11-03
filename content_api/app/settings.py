@@ -43,12 +43,21 @@ REDIS_URL = env('REDIS_URL', 'redis://localhost:6379')
 if env('REDIS_PORT'):
     REDIS_URL = env('REDIS_PORT').replace('tcp:', 'redis:')
 
+OAUTH2_ROUTE_PREFIX = '/oauth'
+OAUTH2_TOKEN_URL = '/token'
+OAUTH2_SCOPES = ['content_api']
+BCRYPT_GENSALT_WORK_FACTOR = 12
+
 INSTALLED_APPS = [
     'content_api.items',
     'content_api.packages',
     'content_api.prepopulate',
     'content_api.publish',
-    'content_api.assets'
+    'content_api.assets',
+    'content_api.clients',
+    'content_api.users',
+    'content_api.tokens',
+    'content_api.auth'
 ]
 
 DOMAIN = {}

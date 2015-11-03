@@ -163,6 +163,7 @@ class GetMethodTestCase(ItemsServiceTestCase):
         expected_whitelist = sorted([
             'start_date', 'end_date',
             'exclude_fields', 'include_fields', 'q',
+            'max_results', 'page'
         ])
 
         whitelist_arg = kwargs.get('whitelist')

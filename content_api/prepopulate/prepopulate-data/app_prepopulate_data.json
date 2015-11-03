@@ -48,5 +48,21 @@
 			"pubstatus": "usable",
 			"version": "3"
 		}
+	},
+	{
+		"resource": "clients",
+		"data": {
+			"_id": "client1_id",
+			"name" : "client1",
+			"client_type": "subscriber"
+		}
+	},
+	{
+		"resource": "users",
+		"data": {
+			"username": "client1_user",
+			"password": "password",
+			"client": "client1_id"
+		}
 	}
 ]

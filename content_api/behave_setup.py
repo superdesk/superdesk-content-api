@@ -31,6 +31,8 @@ def get_test_settings():
     test_settings['SUPERDESK_TESTING'] = True
     test_settings['CONTENT_EXPIRY_MINUTES'] = 99
     test_settings['SUPERDESK_CONTENTAPI_TESTING'] = True
+    test_settings['REDIS_URL'] = 'redis://localhost:6379'
+    test_settings['BCRYPT_GENSALT_WORK_FACTOR'] = 12
 
     return test_settings
 

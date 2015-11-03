@@ -1,5 +1,6 @@
 Feature: Prepopulate public content
 
+	@auth
     Scenario: Prepopulate content
     	When we post to "/prepopulate"
     	"""
@@ -33,6 +34,7 @@ Feature: Prepopulate public content
         }
         """
 
+	@auth
     Scenario: Prepopulate with invalid profile
     	When we post to "/prepopulate"
     	"""

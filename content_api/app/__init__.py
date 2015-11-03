@@ -7,8 +7,6 @@
 # For the full copyright and license information, please see the
 # AUTHORS and LICENSE files distributed with this source code, or
 # at https://www.sourcefabric.org/superdesk/license
-from superdesk.validator import SuperdeskValidator
-
 """
 A module that provides the Superdesk public API application object and runs
 the Superdesk public API.
@@ -20,20 +18,24 @@ thus essentially just a normal `Flask <http://flask.pocoo.org/>`_ application.
     is meant to be used by the Superdesk browser client only.
 """
 
-from eve import Eve
-from eve.io.mongo.mongo import MongoJSONEncoder
-from eve.render import send_response
-from flask.ext.mail import Mail  # @UnresolvedImport
-from raven.contrib.flask import Sentry
 import importlib
 import logging
 import os
 
+from eve import Eve
+from eve.io.mongo.mongo import MongoJSONEncoder
+from eve.render import send_response
+from raven.contrib.flask import Sentry
+from redis.client import StrictRedis
+
 from content_api.app import settings
+from content_api.auth.oauth2 import BearerAuth
+from flask.ext.mail import Mail  # @UnresolvedImport
 import superdesk
 from superdesk.datalayer import SuperdeskDataLayer
-from superdesk.storage.desk_media_storage import SuperdeskGridFSMediaStorage
 from superdesk.errors import SuperdeskError, SuperdeskApiError
+from superdesk.storage.desk_media_storage import SuperdeskGridFSMediaStorage
+from superdesk.validator import SuperdeskValidator
 
 
 logger = logging.getLogger('superdesk')
@@ -92,6 +94,7 @@ def get_app(config=None):
         media_storage = AmazonMediaStorage
 
     app = Eve(
+        auth=BearerAuth,
         settings=config,
         data=SuperdeskDataLayer,
         media=media_storage,
@@ -102,6 +105,8 @@ def get_app(config=None):
     superdesk.app = app
     _set_error_handlers(app)
     app.mail = Mail(app)
+    if config.get('REDIS_URL'):
+        app.redis = StrictRedis.from_url(config['REDIS_URL'], 0)
 
     for module_name in app.config['INSTALLED_APPS']:
         app_module = importlib.import_module(module_name)

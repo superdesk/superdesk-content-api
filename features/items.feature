@@ -6,6 +6,7 @@ Feature: Public content
         [{
             "_id": "tag:example.com,0000:newsml_BRE9A605",
             "headline": "Breaking news in Timbuktu 123",
+            "type": "text",
             "mimetype": "text/plain"
         }]
         """
@@ -14,6 +15,33 @@ Feature: Public content
         """
         {"headline": "Breaking news in Timbuktu 123", "mimetype": "text/plain"}
         """
+
+    Scenario: Item list pagination
+      Given "items"
+        """
+        [
+            {
+                "_id": "tag:example.com,0000:newsml_BRE9A605",
+                "headline": "Breaking news in Timbuktu 123",
+                "type": "text",
+                "versioncreated": "2014-03-16T06:49:47+0000"
+            },
+            {
+                "_id": "tag:example.com,0000:newsml_BRE9A606",
+                "headline": "Breaking news in London 123",
+                "type": "text",
+                "versioncreated": "2014-03-15T06:49:47+0000"
+            },
+            {
+                "_id": "tag:example.com,0000:newsml_BRE9A607",
+                "headline": "Breaking news in Sydney",
+                "type": "picture",
+                "versioncreated": "2014-04-15T06:49:47+0000"
+            }
+        ]
+        """
+        When we get "/items?max_results=2&page=2&start_date=2014-03-15"
+        Then we get list with 1 items
 
     Scenario: Filter by date interval
       Given "items"

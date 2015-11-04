@@ -40,6 +40,8 @@ class BearerAuth(BasicAuth):
                               string or a list of roles.
         :param resource: resource being requested.
         """
+        if resource in app.config['PUBLIC_RESOURCES']:
+            return True
         try:
             token = request.headers.get('Authorization').split(' ')[1]
         except:

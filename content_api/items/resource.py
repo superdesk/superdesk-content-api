@@ -36,7 +36,7 @@ schema = {
     'priority': {'type': 'integer'},
     'uri': {'type': 'string'},
     'usageterms': {'type': 'string'},
-    'version': {'type': 'integer', 'required': True},
+    'version': {'type': 'string', 'required': True, 'empty': False, 'nullable': False},
     'versioncreated': {'type': 'datetime', 'required': True},
 }
 

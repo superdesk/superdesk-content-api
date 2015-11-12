@@ -29,6 +29,7 @@ schema = {
     'profile': {'type': 'string'},
     'pubstatus': {'type': 'string'},
     'renditions': {'type': 'dict'},
+    'service': {'type': 'list'},
     'slugline': {'type': 'string'},
     'subject': {'type': 'list'},
     'type': {'type': 'string'},

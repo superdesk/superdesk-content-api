@@ -122,18 +122,10 @@ def unique_headers(headers_to_add, old_headers):
     return unique_headers
 
 
-def set_user_default(url, data):
-    if is_user_resource(url):
-        user = json.loads(data)
-        user.setdefault('needs_activation', False)
-        data = json.dumps(user)
-
-
 def post_data(context, url, success=False):
     with context.app.mail.record_messages() as outbox:
         data = apply_placeholders(context, context.text)
         url = apply_placeholders(context, url)
-        set_user_default(url, data)
         context.response = context.client.post(get_prefixed_url(context.app, url),
                                                data=data, headers=context.headers)
         if success:

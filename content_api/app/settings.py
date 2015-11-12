@@ -47,7 +47,7 @@ OAUTH2_ROUTE_PREFIX = '/oauth'
 OAUTH2_TOKEN_URL = '/token'
 OAUTH2_SCOPES = ['content_api']
 BCRYPT_GENSALT_WORK_FACTOR = 12
-PUBLIC_RESOURCES = ['publish']
+PUBLIC_RESOURCES = ['publish', 'assets', 'clients', 'users']
 
 INSTALLED_APPS = [
     'content_api.items',

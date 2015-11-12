@@ -25,9 +25,9 @@ class UsersResource(Resource):
         'password': {
             'type': 'string',
             'required': True,
-            'minlength': 32
+            'minlength': 8
         },
-        'user': Resource.rel('clients')
+        'client': Resource.rel('clients')
     }
     item_methods = ['GET', 'PATCH', 'PUT']
     resource_methods = ['GET', 'POST']

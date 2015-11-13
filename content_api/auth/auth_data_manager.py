@@ -66,6 +66,10 @@ class AuthDataManager:
         user_id = request.user._id
 
         # Make sure there is only one grant token for every (client, user)
+        old_tokens = superdesk.get_resource_service('tokens').get(req=None,
+                                                                  lookup={'client': client_id, 'user': user_id})
+        for old_token in old_tokens:
+            app.redis.delete(old_token['access_token'])
         superdesk.get_resource_service('tokens').delete({'client': client_id, 'user': user_id})
 
         expires_in = token.pop('expires_in')

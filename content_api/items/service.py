@@ -80,8 +80,8 @@ class ItemsService(BaseService):
         }
         self._check_for_unknown_params(req, whitelist=allowed_params)
 
-        request_params = req.args or {}
-        req.args = {}
+        request_params = req.args
+        req.args = req.args.copy()
 
         # set the search query
         if 'q' in request_params:
@@ -96,7 +96,9 @@ class ItemsService(BaseService):
         self._set_fields_filter(req)  # Eve's "projection"
 
         try:
-            return super().get(req, lookup)
+            res = super().get(req, lookup)
+            req.args = request_params
+            return res
         except InvalidSearchString:
             raise BadParameterValueError('invalid search text')
 

@@ -29,13 +29,15 @@ schema = {
     'profile': {'type': 'string'},
     'pubstatus': {'type': 'string'},
     'renditions': {'type': 'dict'},
+    'service': {'type': 'list'},
+    'slugline': {'type': 'string'},
     'subject': {'type': 'list'},
     'type': {'type': 'string'},
     'urgency': {'type': 'integer'},
     'priority': {'type': 'integer'},
     'uri': {'type': 'string'},
     'usageterms': {'type': 'string'},
-    'version': {'type': 'integer', 'required': True},
+    'version': {'type': 'string', 'required': True, 'empty': False, 'nullable': False},
     'versioncreated': {'type': 'datetime', 'required': True},
 }
 

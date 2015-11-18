@@ -1,11 +1,13 @@
 Feature: Public content
 
+	@auth
     Scenario: Read an item
-        Given "items"
+    Given "items"
         """
         [{
             "_id": "tag:example.com,0000:newsml_BRE9A605",
             "headline": "Breaking news in Timbuktu 123",
+            "type": "text",
             "mimetype": "text/plain"
         }]
         """
@@ -15,6 +17,35 @@ Feature: Public content
         {"headline": "Breaking news in Timbuktu 123", "mimetype": "text/plain"}
         """
 
+	@auth
+    Scenario: Item list pagination
+      Given "items"
+        """
+        [
+            {
+                "_id": "tag:example.com,0000:newsml_BRE9A605",
+                "headline": "Breaking news in Timbuktu 123",
+                "type": "text",
+                "versioncreated": "2014-03-16T06:49:47+0000"
+            },
+            {
+                "_id": "tag:example.com,0000:newsml_BRE9A606",
+                "headline": "Breaking news in London 123",
+                "type": "text",
+                "versioncreated": "2014-03-15T06:49:47+0000"
+            },
+            {
+                "_id": "tag:example.com,0000:newsml_BRE9A607",
+                "headline": "Breaking news in Sydney",
+                "type": "picture",
+                "versioncreated": "2014-04-15T06:49:47+0000"
+            }
+        ]
+        """
+        When we get "/items?max_results=2&page=2&start_date=2014-03-15"
+        Then we get list with 1 items
+
+	@auth
     Scenario: Filter by date interval
       Given "items"
         """
@@ -99,6 +130,7 @@ Feature: Public content
         {"internal_error": 10002, "_issues": "Start date must not be greater than end date", "_status": "ERR", "_message": "Bad parameter value."}
         """
 
+	@auth
     Scenario: Error on missing rendition
         Given "items"
         """
@@ -141,6 +173,7 @@ Feature: Public content
         {"internal_error": 10003, "_issues": "File not found on media storage.", "_status": "ERR", "_message": "File not found."}
         """
 
+	@auth
     Scenario: Search by text
       Given "items"
         """
@@ -218,6 +251,7 @@ Feature: Public content
         }
         """
 
+	@auth
     Scenario: Search by phrase
       Given "items"
         """

@@ -31,6 +31,8 @@ def get_test_settings():
     test_settings['SUPERDESK_TESTING'] = True
     test_settings['CONTENT_EXPIRY_MINUTES'] = 99
     test_settings['SUPERDESK_CONTENTAPI_TESTING'] = True
+    test_settings['REDIS_URL'] = 'redis://localhost:6379'
+    test_settings['BCRYPT_GENSALT_WORK_FACTOR'] = 12
 
     return test_settings
 
@@ -85,10 +87,11 @@ def get_prefixed_url(current_app, endpoint):
     return url
 
 
+def get_fixture_path(filename):
+    rootpath = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+    return os.path.join(rootpath, 'features', 'steps', 'fixtures', filename)
+
+
 class TestCase(unittest.TestCase):
     def setUp(self):
         setup(self)
-
-    def get_fixture_path(self, filename):
-        rootpath = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
-        return os.path.join(rootpath, 'features', 'steps', 'fixtures', filename)

@@ -75,7 +75,8 @@ class ItemsService(BaseService):
 
         allowed_params = {
             'q', 'start_date', 'end_date',
-            'include_fields', 'exclude_fields'
+            'include_fields', 'exclude_fields',
+            'max_results', 'page'
         }
         self._check_for_unknown_params(req, whitelist=allowed_params)
 

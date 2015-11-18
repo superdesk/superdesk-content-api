@@ -50,13 +50,15 @@ class ResourceConfigTestCase(PublishResourceTestCase):
             'profile': 'string',
             'pubstatus': 'string',
             'renditions': 'dict',
+            'slugline': 'string',
+            'service': 'list',
             'subject': 'list',
             'type': 'string',
             'uri': 'string',
             'urgency': 'integer',
             'priority': 'integer',
             'usageterms': 'string',
-            'version': 'integer',
+            'version': 'string',
             'versioncreated': 'datetime',
         }
 

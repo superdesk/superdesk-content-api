@@ -47,8 +47,11 @@ class AssetsService(BaseService):
         file_name, content_type, metadata = process_file_from_stream(content, content_type=content_type)
         try:
             content.seek(0)
-            file_id = app.media.put(content, filename=file_name, content_type=content_type,
-                                    resource=self.datasource, metadata=metadata, _id=ObjectId(doc['media_id']))
+            file_id = doc['media_id']
+            existing = app.media.get(doc['media_id'], self.datasource)
+            if not existing:
+                file_id = app.media.put(content, filename=file_name, content_type=content_type,
+                                        resource=self.datasource, metadata=metadata, _id=ObjectId(doc['media_id']))
             doc['media'] = file_id
             doc['mime_type'] = content_type
             doc['filemeta'] = decode_metadata(metadata)

@@ -2,9 +2,10 @@ behave==1.2.5
 wooper==0.4.2
 gunicorn==19.3.0
 honcho==0.6.6
-pymongo==2.8
+pymongo==3.1
 Flask-OAuthlib==0.9.1
+Flask-PyMongo==0.4.0
 flask-sentinel==0.0.4
-Eve==0.6.0
 
+-e git+git://github.com/nicolaiarocci/eve@8f35107#egg=Eve=0.6.1-dev
 -e git+git://github.com/superdesk/superdesk-core@2118ec2#egg=Superdesk-Core==0.0.1-dev

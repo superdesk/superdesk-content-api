@@ -180,7 +180,7 @@ class GetMethodTestCase(ItemsServiceTestCase):
     def test_sets_fields_filter_on_request_object(self, fake_set_fields_filter):
         fake_request = MagicMock()
         fake_request.args = MultiDict()
-        fake_request.projection = None
+        fake_request.projection = {}
         lookup = {}
 
         instance = self._make_one()
@@ -190,21 +190,7 @@ class GetMethodTestCase(ItemsServiceTestCase):
         args, _ = fake_set_fields_filter.call_args
 
         self.assertGreater(len(args), 0)
-        self.assertIs(args[0], fake_request)
-
-    def test_invokes_superclass_method_with_given_arguments(self):
-        request = MagicMock()
-        request.args = MultiDict()
-        lookup = {}
-
-        instance = self._make_one()
-        instance.get(request, lookup)
-
-        self.assertTrue(fake_super_get.called)
-        args, _ = fake_super_get.call_args
-        self.assertEqual(len(args), 2)
-        self.assertIs(args[0], request)
-        self.assertIs(args[1], lookup)
+        self.assertEqual(args[0].projection, {})
 
     def test_provides_request_object_to_superclass_if_not_given(self):
         lookup = {}

@@ -66,7 +66,7 @@ Feature: Public content
                 "_id": "tag:example.com,0000:newsml_BRE9A607",
                 "headline": "Breaking news in Sydney",
                 "type": "picture",
-                "versioncreated": "2014-04-15T06:49:47+0000"
+                "versioncreated": "2014-04-17T06:49:47+0000"
             }
         ]
         """
@@ -74,12 +74,6 @@ Feature: Public content
         Then we get list with 2 items
         """
         {
-        	"_links": {
-        		"next": {
-        			"title": "next page",
-        			"href": "/items?start_date=2014-03-16"
-        		}
-        	},
             "_items": [
                 {
                     "headline": "Breaking news in Timbuktu 123",
@@ -95,7 +89,7 @@ Feature: Public content
                 },
                 {
                     "headline": "Breaking news in Sydney",
-                    "versioncreated": "2014-04-15T06:49:47+0000",
+                    "versioncreated": "2014-04-17T06:49:47+0000",
                     "type": "picture",
                     "uri": "http:\/\/localhost:5050\/items\/tag%3Aexample.com%2C0000%3Anewsml_BRE9A607",
                     "_links": {

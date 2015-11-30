@@ -8,23 +8,25 @@
 # AUTHORS and LICENSE files distributed with this source code, or
 # at https://www.sourcefabric.org/superdesk/license
 
+from copy import deepcopy
+from datetime import datetime
 import functools
 import json
 import logging
-
-from datetime import datetime
-from eve.utils import ParsedRequest
-from flask import current_app as app
-from flask import request
-from content_api.errors import BadParameterValueError, UnexpectedParameterError
-from content_api.items.resource import ItemsResource
+from superdesk.datalayer import InvalidSearchString
 from superdesk.services import BaseService
 from superdesk.utc import utcnow
 from urllib.parse import urljoin, urlparse, quote
+
+from flask import current_app as app
+from flask import request
 from werkzeug.datastructures import MultiDict
-from content_api.assets.util import url_for_media
+
 from content_api.app.settings import ELASTIC_DATE_FORMAT
-from superdesk.datalayer import InvalidSearchString
+from content_api.assets.util import url_for_media
+from content_api.errors import BadParameterValueError, UnexpectedParameterError
+from content_api.items.resource import ItemsResource
+from eve.utils import ParsedRequest
 
 
 logger = logging.getLogger(__name__)
@@ -70,8 +72,9 @@ class ItemsService(BaseService):
         :return: database results cursor object
         :rtype: `pymongo.cursor.Cursor`
         """
-        if req is None:
-            req = ParsedRequest()
+        internal_req = ParsedRequest() if req is None else deepcopy(req)
+        internal_req.args = MultiDict()
+        orig_request_params = getattr(req, 'args', MultiDict())
 
         allowed_params = {
             'q', 'start_date', 'end_date',
@@ -80,24 +83,20 @@ class ItemsService(BaseService):
         }
         self._check_for_unknown_params(req, whitelist=allowed_params)
 
-        request_params = req.args
-        req.args = req.args.copy()
-
         # set the search query
-        if 'q' in request_params:
-            req.args['q'] = request_params['q']
-            req.args['default_operator'] = 'OR'
+        if 'q' in orig_request_params:
+            internal_req.args['q'] = orig_request_params['q']
+            internal_req.args['default_operator'] = 'OR'
 
         # set the date range filter
-        start_date, end_date = self._get_date_range(request_params)
+        start_date, end_date = self._get_date_range(orig_request_params)
         date_filter = self._create_date_range_filter(start_date, end_date)
 
-        req.args['filter'] = json.dumps(date_filter)
-        self._set_fields_filter(req)  # Eve's "projection"
+        internal_req.args['filter'] = json.dumps(date_filter)
+        self._set_fields_filter(internal_req)  # Eve's "projection"
 
         try:
-            res = super().get(req, lookup)
-            req.args = request_params
+            res = super().get(internal_req, lookup)
             return res
         except InvalidSearchString:
             raise BadParameterValueError('invalid search text')
@@ -187,7 +186,9 @@ class ItemsService(BaseService):
             * if the request contains more than one value for any of the
               parameters
         """
-        request_params = (request.args or MultiDict())
+        if not request or not getattr(request, 'args'):
+            return
+        request_params = request.args or MultiDict()
 
         if not allow_filtering:
             err_msg = ("Filtering{} is not supported when retrieving a "

@@ -8,14 +8,8 @@
 # AUTHORS and LICENSE files distributed with this source code, or
 # at https://www.sourcefabric.org/superdesk/license
 
-from flask import url_for, current_app as app
+from flask import url_for
 
 
 def url_for_media(media_id):
-    try:
-        url = app.media.url_for_media(media_id)
-        if url:
-            return url
-        return url_for('assets_raw.get_media_streamed', media_id=media_id, _external=True)
-    except AttributeError:
-        return url_for('assets_raw.get_media_streamed', media_id=media_id, _external=True)
+    return url_for('assets_raw.get_media_streamed', media_id=media_id, _external=True)

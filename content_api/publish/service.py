@@ -29,11 +29,24 @@ class PublishService(BaseService):
         for doc in docs:
             doc[config.ID_FIELD] = doc['guid']
             del doc['guid']
-            _id = doc[config.ID_FIELD]
-            original = self.find_one(req=None, _id=_id)
-            if original:
-                self.update(_id, doc, original)
-                ids.append(_id)
-            else:
-                ids.extend(super().create([doc], **kwargs))
+            ids.extend(self._create_doc(doc, **kwargs))
         return ids
+
+    def _create_doc(self, doc, **kwargs):
+        _id = doc[config.ID_FIELD]
+        original = self.find_one(req=None, _id=_id)
+        self._process_associations(doc)
+        if original:
+            self.update(_id, doc, original)
+            return _id
+        else:
+            return super().create([doc], **kwargs)
+
+    def _process_associations(self, doc):
+        if 'associations' in doc:
+            for assoc_list in doc['associations'].values():
+                for assoc in assoc_list:
+                    # if then association dictionary contains more than 2 items
+                    # (_id, type) then it's an embedded item
+                    if len(assoc) > 2:
+                        self._create_doc(assoc)

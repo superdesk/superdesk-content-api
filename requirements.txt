@@ -7,5 +7,5 @@ Flask-OAuthlib==0.9.1
 Flask-PyMongo==0.4.0
 flask-sentinel==0.0.4
 
--e git+git://github.com/nicolaiarocci/eve@8f35107#egg=Eve=0.6.1-dev
+-e git+git://github.com/nicolaiarocci/eve@8f35107#egg=Eve==0.6.1-dev
 -e git+git://github.com/superdesk/superdesk-core@2118ec2#egg=Superdesk-Core==0.0.1-dev

@@ -82,6 +82,7 @@ def get_app(config=None):
     if config is None:
         config = {}
 
+    config.setdefault('SOURCES', {})
     config['APP_ABSPATH'] = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
 
     for key in dir(settings):

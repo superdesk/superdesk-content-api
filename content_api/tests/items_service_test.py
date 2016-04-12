@@ -841,7 +841,7 @@ class OnFetchedMethodTestCase(ItemsServiceTestCase):
             instance.on_fetched(result)
 
         self_link = result.get('_links', {}).get('self', {}).get('href')
-        self.assertEqual(self_link, 'items?start_date=1975-12-31')
+        self.assertEqual(self_link, 'items?start_date=1975-12-31%23foo')
 
 
 class GetUriMethodTestCase(ItemsServiceTestCase):

@@ -32,6 +32,7 @@ schema = {
     'service': {'type': 'list'},
     'slugline': {'type': 'string'},
     'subject': {'type': 'list'},
+    'cvs': {'type': 'list'},
     'type': {'type': 'string'},
     'urgency': {'type': 'integer'},
     'priority': {'type': 'integer'},

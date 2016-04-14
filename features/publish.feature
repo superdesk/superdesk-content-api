@@ -5,13 +5,22 @@ Feature: Publish service
     	"""
     	[{
             "guid": "tag:example.com,0000:newsml_BRE9A605",
-            "type": "picture",
+            "body_html": "<p>Lorem ipsum</p>",
+            "byline": "john",
+            "description_text": "lorem ipsum",
             "headline": "lorem ipsum",
-            "versioncreated": "2014-03-16T06:49:47+0000",
             "language": "en",
+            "located": "Prague",
             "mimetype": "text/plain",
+            "priority": 6,
             "pubstatus": "usable",
-            "version": "1"
+            "service": [{"code": "f", "name": "Finance"}],
+            "slugline": "lorem",
+            "subject": [{"code": "01000000", "name": "arts"}],
+            "type": "text",
+            "urgency": 3,
+            "version": "1",
+            "versioncreated": "2014-03-16T06:49:47+0000"
     	}]
     	"""
         Then we get response code 201
@@ -54,6 +63,8 @@ Feature: Publish service
 
         When we get "/items?start_date=2014-03-16"
         Then we get list with 1 items
+        When we get "/items/tag:example.com,0000:newsml_BRE9A605"
+        Then we get response code 200
 
     Scenario: Publish an item with error
     	When we post to "/publish"

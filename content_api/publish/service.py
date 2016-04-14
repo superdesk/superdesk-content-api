@@ -31,8 +31,7 @@ class PublishService(BaseService):
         return ids
 
     def _create_doc(self, doc, **kwargs):
-        _id = doc[config.ID_FIELD] = doc['guid']
-        del doc['guid']
+        _id = doc[config.ID_FIELD] = doc.pop('guid')
         original = self.find_one(req=None, _id=_id)
         self._process_associations(doc)
         if original:

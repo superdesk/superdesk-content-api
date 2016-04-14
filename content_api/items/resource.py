@@ -12,6 +12,7 @@ from superdesk.resource import Resource
 
 
 schema = {
+    '_id': {'type': 'string', 'unique': True},
     'associations': {'type': 'dict'},
     'body_html': {'type': 'string'},
     'body_text': {'type': 'string'},

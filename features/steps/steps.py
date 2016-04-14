@@ -237,6 +237,8 @@ def step_impl_then_get_error(context, code):
 
 @then('we get response code {code}')
 def step_impl_then_get_code(context, code):
+    assert context.response.status_code == int(code), \
+        'got %d %s' % (context.response.status_code, context.response.get_data())
     expect_status(context.response, int(code))
 
 

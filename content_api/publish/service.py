@@ -27,13 +27,12 @@ class PublishService(BaseService):
     def create(self, docs, **kwargs):
         ids = []
         for doc in docs:
-            doc[config.ID_FIELD] = doc['guid']
-            del doc['guid']
             ids.extend(self._create_doc(doc, **kwargs))
         return ids
 
     def _create_doc(self, doc, **kwargs):
-        _id = doc[config.ID_FIELD]
+        _id = doc[config.ID_FIELD] = doc['guid']
+        del doc['guid']
         original = self.find_one(req=None, _id=_id)
         self._process_associations(doc)
         if original:
@@ -50,3 +49,6 @@ class PublishService(BaseService):
                     # (_id, type) then it's an embedded item
                     if len(assoc) > 2:
                         self._create_doc(assoc)
+                        for key in list(assoc):
+                            if key != config.ID_FIELD and key != 'type':
+                                del assoc[key]

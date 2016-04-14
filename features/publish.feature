@@ -59,7 +59,7 @@ Feature: Publish service
     	When we post to "/publish"
     	"""
     	[{
-            "_id": "tag:example.com,0000:newsml_BRE9A605",
+            "guid": "tag:example.com,0000:newsml_BRE9A605",
             "type": "picture",
             "headline": "lorem ipsum",
             "versioncreated": "2014-03-16T06:49:47+0000",
@@ -98,7 +98,7 @@ Feature: Publish service
             "associations": {
                 "main": [
                     {
-                    	"_id": "item5",
+                    	"guid": "item5",
                         "headline": "item5",
                         "urgency": 1,
                         "guid": "urn:newsml:localhost:2016-03-17T17:07:00.093304:8089015f-a7d7-494f-9b68-13829ab34366",
@@ -115,7 +115,7 @@ Feature: Publish service
                 ],
                 "story": [
                     {
-                    	"_id": "item9",
+                    	"guid": "item9",
                         "headline": "item9",
                         "urgency": 1,
                         "guid": "urn:newsml:localhost:2016-03-17T17:07:01.639259:5dd14b97-a15d-41b6-aee7-ae9b3948792f",

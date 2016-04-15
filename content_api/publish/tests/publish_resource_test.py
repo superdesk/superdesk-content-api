@@ -32,6 +32,7 @@ class ResourceConfigTestCase(PublishResourceTestCase):
 
     def test_schema(self):
         field_types = {
+            '_id': 'string',
             'guid': 'string',
             'associations': 'dict',
             'body_html': 'string',

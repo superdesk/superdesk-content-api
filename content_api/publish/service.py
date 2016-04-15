@@ -13,6 +13,7 @@ import logging
 from eve.utils import config
 
 from superdesk.services import BaseService
+from superdesk.errors import SuperdeskApiError
 
 
 logger = logging.getLogger(__name__)
@@ -43,8 +44,15 @@ class PublishService(BaseService):
 
     def _process_associations(self, doc):
         if 'associations' in doc:
-            for assoc_list in doc['associations'].values():
+            for group, assoc_list in doc['associations'].items():
+                if type(assoc_list) != list:
+                    msg = "Invalid value for associations group '%s', expected list" % (group)
+                    raise SuperdeskApiError.badRequestError(msg)
                 for assoc in assoc_list:
+                    if type(assoc) != dict:
+                        msg = "Associations group %s has invalid value in list: '%s', should be dictionary" \
+                            % (group, assoc)
+                        raise SuperdeskApiError.badRequestError(msg)
                     # if then association dictionary contains more than 2 items
                     # (_id, type) then it's an embedded item
                     if len(assoc) > 2:

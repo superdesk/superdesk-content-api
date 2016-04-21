@@ -26,6 +26,7 @@ from eve import Eve
 from eve.io.mongo.mongo import MongoJSONEncoder
 from eve.render import send_response
 from raven.contrib.flask import Sentry
+import raven.exceptions
 from redis.client import StrictRedis
 
 from content_api.app import settings
@@ -65,7 +66,8 @@ def _set_error_handlers(app):
     @app.errorhandler(500)
     def server_error_handler(error):
         """Log server errors."""
-        app.sentry.captureException()
+        if getattr(app, 'sentry'):
+            app.sentry.captureException()
         logger.exception(error)
         return_error = SuperdeskApiError.internalError()
         return client_error_handler(return_error)
@@ -123,7 +125,15 @@ def get_app(config=None):
         prefix = app.api_prefix or None
         app.register_blueprint(blueprint, url_prefix=prefix)
 
-    app.sentry = sentry
-    sentry.init_app(app)
+    try:
+        sentry.init_app(app)
+    except (
+        raven.exceptions.APIError,
+        raven.exceptions.ConfigurationError,
+        raven.exceptions.InvalidGitRepository
+    ) as e:
+        logger.error("Unable to init Sentry: {}".format(e))
+    else:
+        app.sentry = sentry
 
     return app

@@ -1,10 +1,8 @@
-flake8==2.5.4
+flask-sentinel==0.0.4
 behave==1.2.5
 wooper==0.4.2
+
 gunicorn==19.4.5
 honcho==0.6.6
-Flask-OAuthlib==0.9.1
-flask-sentinel==0.0.4
-Eve==0.6.3
 
--e git+git://github.com/superdesk/superdesk-core@aee18664d977b340a821999a74e3be09983bd12c#egg=Superdesk-Core==0.1-dev
+git+git://github.com/superdesk/superdesk-core.git@f6fe25b64#egg=Superdesk-Core

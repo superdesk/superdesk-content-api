@@ -43,19 +43,15 @@ class PublishService(BaseService):
 
     def _process_associations(self, doc):
         if 'associations' in doc:
-            for group, assoc_list in doc['associations'].items():
-                if type(assoc_list) != list:
-                    msg = "Invalid value for associations group '%s', expected list" % (group)
+            for group, assoc in doc['associations'].items():
+                if type(assoc) != dict:
+                    msg = "Associations group %s has invalid value in list: '%s', should be dictionary" \
+                        % (group, assoc)
                     raise SuperdeskApiError.badRequestError(msg)
-                for assoc in assoc_list:
-                    if type(assoc) != dict:
-                        msg = "Associations group %s has invalid value in list: '%s', should be dictionary" \
-                            % (group, assoc)
-                        raise SuperdeskApiError.badRequestError(msg)
-                    # if then association dictionary contains more than 2 items
-                    # (_id, type) then it's an embedded item
-                    if len(assoc) > 2:
-                        self._create_doc(assoc)
-                        for key in list(assoc):
-                            if key != config.ID_FIELD and key != 'type':
-                                del assoc[key]
+                # if then association dictionary contains more than 2 items
+                # (_id, type) then it's an embedded item
+                if len(assoc) > 2:
+                    self._create_doc(assoc)
+                    for key in list(assoc):
+                        if key != config.ID_FIELD and key != 'type':
+                            del assoc[key]

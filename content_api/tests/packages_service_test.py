@@ -65,7 +65,7 @@ class OnFetchedItemMethodTestCase(PackagesServiceTestCase):
         document = {
             '_id': 'item:XYZ',
             'associations': {
-                'main': [{'type': 'picture', '_id': 'img:123'}],
+                'main': {'type': 'picture', '_id': 'img:123'}
             }
         }
 
@@ -73,10 +73,10 @@ class OnFetchedItemMethodTestCase(PackagesServiceTestCase):
         instance.on_fetched_item(document)
 
         expected_assoc = {
-            'main': [{
+            'main': {
                 'type': 'picture',
                 'uri': 'http://content_api.com/items_endpoint/img%3A123'
-            }]
+            }
         }
         self.assertEqual(document.get('associations'), expected_assoc)
 
@@ -84,7 +84,7 @@ class OnFetchedItemMethodTestCase(PackagesServiceTestCase):
         document = {
             '_id': 'item:XYZ',
             'associations': {
-                'story_object': [{'type': 'composite', '_id': 'pkg:456'}]
+                'story_object': {'type': 'composite', '_id': 'pkg:456'}
             }
         }
 
@@ -92,10 +92,10 @@ class OnFetchedItemMethodTestCase(PackagesServiceTestCase):
         instance.on_fetched_item(document)
 
         expected_assoc = {
-            'story_object': [{
+            'story_object': {
                 'type': 'composite',
                 'uri': 'http://content_api.com/packages_endpoint/pkg%3A456'
-            }]
+            }
         }
         self.assertEqual(document.get('associations'), expected_assoc)
 
@@ -137,13 +137,13 @@ class OnFetchedMethodTestCase(PackagesServiceTestCase):
                 {
                     '_id': 'pkg:ABC',
                     'associations': {
-                        'main_picture': [{'type': 'picture', '_id': 'img:123'}],
+                        'main_picture': {'type': 'picture', '_id': 'img:123'}
                     }
                 },
                 {
                     '_id': 'pkg:DEF',
                     'associations': {
-                        'main_story': [{'type': 'composite', '_id': 'pkg:456'}],
+                        'main_story': {'type': 'composite', '_id': 'pkg:456'}
                     }
                 },
             ]
@@ -154,20 +154,20 @@ class OnFetchedMethodTestCase(PackagesServiceTestCase):
 
         # check 1st fetched package's associations
         expected_assoc = {
-            'main_picture': [{
+            'main_picture': {
                 'type': 'picture',
                 'uri': 'http://content_api.com/items_endpoint/img%3A123'
-            }]
+            }
         }
         fetched_package = result['_items'][0]
         self.assertEqual(fetched_package.get('associations'), expected_assoc)
 
         # check 2nd fetched package's associations
         expected_assoc = {
-            'main_story': [{
+            'main_story': {
                 'type': 'composite',
                 'uri': 'http://content_api.com/packages_endpoint/pkg%3A456'
-            }]
+            }
         }
         fetched_package = result['_items'][1]
         self.assertEqual(fetched_package.get('associations'), expected_assoc)

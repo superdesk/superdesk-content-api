@@ -54,6 +54,7 @@ class ResourceConfigTestCase(PublishResourceTestCase):
             'slugline': 'string',
             'service': 'list',
             'subject': 'list',
+            'keywords': 'list',
             'type': 'string',
             'uri': 'string',
             'urgency': 'integer',

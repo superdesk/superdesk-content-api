@@ -57,4 +57,4 @@ class PackagesService(ItemsService):
         """
         for item in document.get('associations', {}).values():
             item['uri'] = self._get_uri(item)
-            del item['_id']
+            item.pop('_id', None)

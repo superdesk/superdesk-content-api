@@ -167,7 +167,8 @@ class ItemsService(BaseService):
             api_url=app.config['PUBLICAPI_URL'],
             endpoint=app.config['URLS'][endpoint_name]
         )
-        return urljoin(resource_url, quote(document['_id']))
+
+        return urljoin(resource_url, quote(document.get('_id', document.get('guid'))))
 
     def _check_for_unknown_params(
         self, request, whitelist, allow_filtering=True

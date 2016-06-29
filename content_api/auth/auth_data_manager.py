@@ -27,11 +27,11 @@ class AuthDataManager:
         """ Loads a client from the database and returns it as an object or None.
         """
         client = superdesk.get_resource_service('clients').find_one(req=None, _id=client_id)
+        if not client:
+            return None
         client['client_id'] = client['_id']
         client['default_scopes'] = app.config['OAUTH2_SCOPES']
         client['default_redirect_uri'] = app.config['PUBLICAPI_URL']
-        if not client:
-            return None
         return DictObject(**client)
 
     @staticmethod

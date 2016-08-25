@@ -29,7 +29,7 @@ setup(
     url='https://github.com/superdesk/superdesk-content-api',
     license='GPLv3',
     platforms=['any'],
-    packages=find_packages('content_api'),
+    packages=find_packages(exclude=['features']),
     install_requires=REQUIREMENTS,
     scripts=[
         'content_api_manage.py',

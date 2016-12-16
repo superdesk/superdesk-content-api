@@ -82,7 +82,11 @@ JSON response in the body.
 
 # Authentication
 
-TODO
+All requests must be authenticated using auth token from superdesk via `Authorization` header:
+
+```
+Authorization: Token <token-from-superdesk>
+```
 
 # SDK Libraries
 
@@ -116,36 +120,9 @@ Content API.
 For more information to stay up to date you can read our [developer blog](http://www.superdesk.org/en/site/news/?filter=Blog).
 
 
-# Authentication
-
-Superdesk content API uses OAuth2 for securing access to the content. Before requesting
-a content resource the access token has to be aquired.
-
-## Token [/oauth/token]
-
-
-### Retrieve an access token [POST]
-
-The access token is used in the Authorization header when requesting content resources:
-    Authorization: OAuth2 <access_token>
-
-+ Request (application/x-www-form-urlencoded)
-
-        client_id=client1_id&grant_type=password&username=client1_user&password=password
-
-+ Response 200 (application/json)
-        {
-            scope: "content_api"
-            access_token: "cQJuHajWOmyfWEqgrGFwWI04aTRreK"
-            token_type: "Bearer"
-            refresh_token: "v7xUnFXIAFfaDGAavr2zBASNiibGLQ"
-        }
-
-
 # Group API Resources
 
 ## Root Endpoint [/]
-
 
 ### Fetch all available resources [GET]
 
@@ -158,20 +135,8 @@ The access token is used in the Authorization header when requesting content res
             "_links": {
                 "child": [
                     {
-                        "href": "publish",
-                        "title": "publish"
-                    },
-                    {
-                        "href": "assets",
-                        "title": "assets"
-                    },
-                    {
                         "href": "items",
                         "title": "items"
-                    },
-                    {
-                        "href": "prepopulate",
-                        "title": "prepopulate"
                     },
                     {
                         "href": "packages",
@@ -196,7 +161,7 @@ document in its ninjs (News in JSON) representation. To invoke this method, you
 must know the item Id of the News Item you want to retrieve.
 
 + Headers
-    Authorization: OAuth2 a1hso5qapmhM0CozqBUyAjvrpISkdl
+    Authorization: Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MDk3ODkyNDEsInN1YiI6IjU4MTg3MTM3M2I4MGExMzg5MzFkNGQyYyJ9.kgehF33i5Zvbe6B_bDb8TYWT9oLWKJuFXOpQbInpExI
 
 + Parameters
     + _id (required, string, `1`) ... Identifier of the News Item you want to retrieve.
@@ -239,7 +204,6 @@ must know the item Id of the News Item you want to retrieve.
 
 ## Picture News Item [/items/{_id}]
 
-
 ### Fetch a single Picture News Item [GET]
 
 This method is used to retrieve a particular item as a NewsML-G2 News Item
@@ -247,7 +211,7 @@ document in its ninjs (News in JSON) representation. To invoke this method, you
 must know the item Id of the News Item you want to retrieve.
 
 + Headers
-    Authorization: OAuth2 a1hso5qapmhM0CozqBUyAjvrpISkdl
+    Authorization: Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MDk3ODkyNDEsInN1YiI6IjU4MTg3MTM3M2I4MGExMzg5MzFkNGQyYyJ9.kgehF33i5Zvbe6B_bDb8TYWT9oLWKJuFXOpQbInpExI
 
 + Parameters
     + _id (required, string, `1`) ... Identifier of the News Item you want to retrieve.
@@ -286,8 +250,7 @@ must know the item Id of the News Item you want to retrieve.
         }
 
 
-## News Item Collection [/items?q={q}&start_date={start_date}&end_date={end_date}&include_fields={include_fields}&exclude_fields={exclude_fields}]
-
+## News Item Collection [/items?where={where}&start_date={start_date}&end_date={end_date}&include_fields={include_fields}&exclude_fields={exclude_fields}]
 
 ### List News Items [GET]
 
@@ -298,10 +261,10 @@ This method is used to retrieve a list of News Items.
   order (i.e., newest items first).
 
 + Headers
-    Authorization: OAuth2 a1hso5qapmhM0CozqBUyAjvrpISkdl
+    Authorization: Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MDk3ODkyNDEsInN1YiI6IjU4MTg3MTM3M2I4MGExMzg5MzFkNGQyYyJ9.kgehF33i5Zvbe6B_bDb8TYWT9oLWKJuFXOpQbInpExI
 
 + Parameters
-    + q (optional, object) ... Search query.
+    + where (optional, object) ... Filter.
     + start_date (optional, date) ... The start of the date range for the news
       items to be retrieved. If no start date is specified, the news items
       returned will be limited to the last 24 hours.
@@ -394,14 +357,13 @@ Package Items contain grouped references to multiple News Items.
 
 ## Package [/packages/{_id}]
 
-
 ### Fetch a single Package Item [GET]
 
 The item method is used to retrieve a particular NewsML-G2 Package Item in
 its ninjs (News in JSON) representation.
 
 + Headers
-    Authorization: OAuth2 a1hso5qapmhM0CozqBUyAjvrpISkdl
+    Authorization: Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MDk3ODkyNDEsInN1YiI6IjU4MTg3MTM3M2I4MGExMzg5MzFkNGQyYyJ9.kgehF33i5Zvbe6B_bDb8TYWT9oLWKJuFXOpQbInpExI
 
 + Parameters
     - _id (string, `1`) ... Package Identifier.
@@ -474,18 +436,17 @@ its ninjs (News in JSON) representation.
             }
         }
 
-## Package Collection [/packages?q={q}&start_date={start_date}&end_date={end_date}&include_fields={include_fields}&exclude_fields={exclude_fields}]
-
+## Package Collection [/packages?where={where}&start_date={start_date}&end_date={end_date}&include_fields={include_fields}&exclude_fields={exclude_fields}]
 
 ### List Package Items [GET]
 
 The packages method is used to obtain a list of package items.
 
 + Headers
-    Authorization: OAuth2 a1hso5qapmhM0CozqBUyAjvrpISkdl
+    Authorization: Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MDk3ODkyNDEsInN1YiI6IjU4MTg3MTM3M2I4MGExMzg5MzFkNGQyYyJ9.kgehF33i5Zvbe6B_bDb8TYWT9oLWKJuFXOpQbInpExI
 
 + Parameters
-    + q (optional, object) ... Search query.
+    + where (optional, object) ... Filter.
     + start_date (optional, date) ... The start of the date range for the news
       items to be retrieved. If no start date is specified, the news items
       returned will be limited to the last 24 hours.

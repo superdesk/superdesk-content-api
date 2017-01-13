@@ -1,11 +1,8 @@
 # Superdesk Content API
-[![Build Status](https://travis-ci.org/superdesk/superdesk-content-api.svg?branch=master)](https://travis-ci.org/superdesk/superdesk-content-api)
 
-In today's fast-changing media landscape, digital news content is not longer
-consumed in the Web only, but in a diversity of platforms, services and
-devices. The Superdesk Content API allows news organizations and content
-publishers using [Superdesk](https://github.com/superdesk/superdesk) to make
-their content available for delivering everywhere.
+## DEPRECATION NOTICE
+
+The Superdesk Content API has been integrated into the Superdesk server core and can now be found at https://github.com/superdesk/superdesk-core/tree/master/content_api
 
 ## Overview
 

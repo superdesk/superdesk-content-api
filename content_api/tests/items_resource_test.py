@@ -38,8 +38,8 @@ class ResourceConfigTestCase(ItemsResourceTestCase):
 
     def test_allowed_item_http_methods(self):
         klass = self._get_target_class()
-        self.assertEqual(klass.item_methods, ['GET'])
+        self.assertEqual(klass.item_methods, ['GET', 'OPTIONS'])
 
     def test_allowed_resource_http_methods(self):
         klass = self._get_target_class()
-        self.assertEqual(klass.resource_methods, ['GET'])
+        self.assertEqual(klass.resource_methods, ['GET', 'OPTIONS'])

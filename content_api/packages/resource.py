@@ -21,5 +21,5 @@ class PackagesResource(ItemsResource):
         'default_sort': [('_updated', -1)],
     }
 
-    item_methods = ['GET']
-    resource_methods = ['GET']
+    item_methods = ['GET', 'OPTIONS']
+    resource_methods = ['GET', 'OPTIONS']

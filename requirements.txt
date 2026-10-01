@@ -1,7 +1,7 @@
 flake8==2.5.4
 behave==1.2.5
 wooper==0.4.2
-gunicorn==19.4.5
+gunicorn==22.0.0
 honcho==0.6.6
 Flask>=0.10,<0.11
 Flask-OAuthlib==0.9.1

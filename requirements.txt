@@ -6,6 +6,6 @@ honcho==0.6.6
 Flask>=0.10,<0.11
 Flask-OAuthlib==0.9.1
 flask-sentinel==0.0.4
-Eve==0.6.3
+Eve==0.7.5
 
 -e git+git://github.com/superdesk/superdesk-core@aee18664d977b340a821999a74e3be09983bd12c#egg=Superdesk-Core==0.1-dev
